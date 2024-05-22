@@ -1,9 +1,45 @@
+@font-face{
+    font-family: 'viva';
+    src: url('./fonts/viva-mexico-cabrones/viva_mexico.ttf') format('truetype');
+}
+
 body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    background-image: url('./img/5_background/desert.jpg');
+    background-position: center;
+    font-family: 'viva', Arial, Helvetica, sans-serif;
+
+}
+
+h1 {
+    font-size: 92px;
+    color: Brown;
+    filter: drop-shadow(0px 0px 4px white);
+    margin-bottom: 20px;
 }
 
 canvas {
     background-color: black;
+    border-radius: 12px;
+    border: 6px solid white;
+    filter:drop-shadow(0px 0px 12px black)
+}
+
+/* Smartphones ----------------------*/
+@media only screen and (max-width: 720px){
+    canvas{
+        width: 100%;
+    }
+}
+
+/* Smartphones ----------------------*/
+@media only screen and (max-height: 480px){
+    canvas{
+        height: 100vh;
+    }
 }
