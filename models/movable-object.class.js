@@ -5,9 +5,10 @@ class MovableObject extends DrawableObject {
     acceleration = 2.5;
     energy = 100;
     lastHit = 0;
+    applyGravityInterval;
 
     applyGravity() {
-        setInterval(() => {
+        this.applyGravityInterval = setInterval(() => {
             if (this.isAboveGround() || this.speedY > 0) {
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;
@@ -53,6 +54,18 @@ class MovableObject extends DrawableObject {
         let path = images[i];
         this.img = this.imageCache[path];
         this.currentImage++;
+    }
+
+    playAnimationOnce(images, i, time) {
+        let animatedIntervall = setInterval(() => {
+            let path = images[i];
+            this.img = this.imageCache[path];
+            console.log('test', this.img);
+            i++;
+            if (i == images.length) {
+                clearInterval(animatedIntervall);
+            }
+        }, time);
     }
 
     moveRight() {
