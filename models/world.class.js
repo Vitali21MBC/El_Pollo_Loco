@@ -6,6 +6,7 @@ class World {
     keyboard;
     camera_x = 0;
     statusBar = new StatusBar();
+    coinBar = new CoinBar();
     throwableObject = [];
 
     constructor(canvas, keyboard) {
@@ -24,6 +25,7 @@ class World {
     run() {
         setInterval(() => {
             this.checkCollisions();
+            this.checkCollections();
             this.checkThrowObjects();
         }, 200);
     }
@@ -44,20 +46,31 @@ class World {
         });
     }
 
+    checkCollections() {
+        this.level.coins.forEach((coin) => {
+            if (this.character.isColliding(coin)) {
+                this.character.collect();
+                let hitCoin = this.level.coins.indexOf(coin);
+                this.level.coins.splice(hitCoin, 1);
+                this.coinBar.setPercentage(this.character.coinStack);
+
+            }
+        });
+    }
+
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
         this.ctx.translate(this.camera_x, 0);
 
         this.addObjectsToMap(this.level.backgroundObjects);
-
+        this.addObjectsToMap(this.level.clouds)
         this.ctx.translate(-this.camera_x, 0);
         // --------- Space for fixed objects ---------
         this.addToMap(this.statusBar);
+        this.addToMap(this.coinBar);
         this.ctx.translate(this.camera_x, 0);
         // --------- Space for fixed objects ---------
-
-        this.addObjectsToMap(this.level.clouds)
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.bottles);

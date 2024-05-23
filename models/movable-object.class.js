@@ -6,6 +6,14 @@ class MovableObject extends DrawableObject {
     energy = 100;
     lastHit = 0;
     applyGravityInterval;
+    coinStack = 0;
+
+    coin_sound = new Audio('../audio/coin.mp3');
+
+    constructor(){
+        super();
+        this.coin_sound.volume = 0.02;
+    }
 
     applyGravity() {
         this.applyGravityInterval = setInterval(() => {
@@ -38,6 +46,15 @@ class MovableObject extends DrawableObject {
         } else {
             this.lastHit = new Date().getTime();
         }
+    }
+
+    collect() {
+        this.coinStack += 1;
+        this.coin_sound.play();
+        if (this.coinStack > 20) {
+            this.coinStack = 20;
+        }
+        console.log('coinStack', this.coinStack);
     }
 
     isHurt() {

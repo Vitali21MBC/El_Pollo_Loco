@@ -143,7 +143,7 @@ class Character extends MovableObject {
                 this.snoring_sound.play();
                 this.sleepTimer++;
                 console.log('SLEEP', this.sleepTimer);
-            } else if (this.sleepTimer < 60 && !(this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && !this.isAboveGround() && !this.isDead() && !this.isHurt()) { 
+            } else if (this.sleepTimer < 60 && !(this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && !this.isAboveGround() && !this.isDead() && !this.isHurt()) {
                 this.playAnimation(this.IMAGES_IDLE);
                 this.sleepTimer++;
                 console.log('IDLE', this.sleepTimer);
@@ -156,6 +156,8 @@ class Character extends MovableObject {
                 this.playAnimation(this.IMAGES_HURT);
                 this.chicken_attack_sound.play();
                 this.hurt_sound.play();
+                this.sleepTimer = 0;
+                console.log(this.sleepTimer);
             }
         }, 50);
 
@@ -163,8 +165,9 @@ class Character extends MovableObject {
         setInterval(() => {
             if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD);
+                this.y = this.y + (this.speed * 2);
             }
-        }, 100);
+        }, 60);
 
         // Separate interval for jumping animation
         setInterval(() => {
