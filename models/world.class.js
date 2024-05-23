@@ -28,8 +28,8 @@ class World {
         }, 200);
     }
 
-    checkThrowObjects(){
-        if(this.keyboard.D){
+    checkThrowObjects() {
+        if (this.keyboard.D) {
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100)
             this.throwableObject.push(bottle)
         }
@@ -55,10 +55,15 @@ class World {
         // --------- Space for fixed objects ---------
         this.addToMap(this.statusBar);
         this.ctx.translate(this.camera_x, 0);
+        // --------- Space for fixed objects ---------
 
+        this.addObjectsToMap(this.level.clouds)
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.enemies);
-        this.addObjectsToMap(this.level.clouds);
+        this.addObjectsToMap(this.level.bottles);
+        this.addObjectsToMap(this.level.coins);
+      ;
+
         this.addObjectsToMap(this.throwableObject);
 
         this.ctx.translate(-this.camera_x, 0);

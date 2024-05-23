@@ -23,6 +23,7 @@ class ThrowableObject extends MovableObject {
     throwInterval;
     broken = false;
     throwing_sound = new Audio('../audio/throw.mp3');
+    breaking_bottle_sound = new Audio('../audio/breaking_bottle.mp3');
 
     constructor(x, y) {
         super().loadImage('./img/6_salsa_bottle/salsa_bottle.png');
@@ -37,6 +38,7 @@ class ThrowableObject extends MovableObject {
         this.bottleBroken();
 
         this.throwing_sound.volume = 0.3;
+        this.breaking_bottle_sound.volume = 0.05;
     }
 
 
@@ -66,6 +68,7 @@ class ThrowableObject extends MovableObject {
         let bottleBreaksInterval = setInterval(() => {
             if (this.broken) {
                 this.playAnimationOnce(this.IMAGES_SPLASH, 0, 60);
+                this.breaking_bottle_sound.play();
                 clearInterval(bottleBreaksInterval);
                 clearInterval(this.throwInterval);
                 clearInterval(this.applyGravityInterval);
