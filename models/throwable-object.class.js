@@ -41,18 +41,15 @@ class ThrowableObject extends MovableObject {
         this.breaking_bottle_sound.volume = 0.05;
     }
 
-
     throw() {
+        console.log('bottleStack', this.bottleStack)
         this.speedY = 30;
         this.throwing_sound.play();
         this.applyGravity();
-
         this.throwInterval = setInterval(() => {
             this.x += 10;
         }, 25);
-
     }
-
 
     animate() {
         let flyBottle = setInterval(() => {
@@ -76,94 +73,4 @@ class ThrowableObject extends MovableObject {
             }
         }, 1000 / 60);
     }
-    
-
-
-
-
-
-
-
-
-
-
-
-
-    // animate() {
-    //     setInterval(() => {
-    //         if (this.bottleIsBroken && this.isAboveGround()) {
-    //             this.playAnimationOnce(this.IMAGES_SPLASH, 0, 10);
-    //         } else {
-    //             this.playAnimation(this.IMAGES_BOTTLE);
-    //         }
-    //     }, 60);
-    // }
-
-    // throw() {
-    //     this.speedY = 30;
-    //     this.throwing_sound.play();
-    //     this.applyGravity();
-
-    //     this.throwInterval = setInterval(() => {
-    //         this.bottleLandsOnGround();
-    //         if (this.bottleIsBroken) {
-    //             this.stopBottle();
-    //         } else {
-    //             this.x += 10;
-    //         }
-    //     }, 25);
-    // }
-
-    // bottleLandsOnGround(){
-    //     if (this.y >= 360) {
-    //         this.bottleIsBroken = true;
-    //     }
-    // }
-
-    // stopBottle() {
-    //     clearInterval(this.applyGravityInterval);
-    //     clearInterval(this.throwInterval);
-    // }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // setInterval(() => {
-    //     if (this.y < 360) {
-    //         this.x += 10;
-    //     }
-    // }, 25);
-
-    //     let interval = setInterval(() => {
-    //         if (this.y < 360) {
-    //             this.playAnimation(this.IMAGES_BOTTLE);
-    //         } else {
-    //             this.splashBottle(interval);
-    //         }
-    //     }, 60);
-    // }
-
-    // splashBottle(interval) {
-    //     this.playAnimation(this.IMAGES_SPLASH);
-    // }
-
-
-
-
-
-
-
-
-
 }

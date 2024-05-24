@@ -14,10 +14,10 @@ class CoinBar extends DrawableObject {
     constructor() {
         super();
         this.loadImages(this.IMAGES);
-        this.x = 250;
+        this.x = 255;
         this.y = 0;
         this.width = 200;
-        this.height = 50;
+        this.height = 55;
         this.setPercentage(0);
     }
 
@@ -29,15 +29,15 @@ class CoinBar extends DrawableObject {
     }
 
     resolveImageIndex() {
-        if (this.count == 20) {
+        if (this.count == 10) {
             return 5;
-        } else if (this.count > 16) {
+        } else if (this.count >= 8) {
             return 4;
-        } else if (this.count > 12) {
+        } else if (this.count >= 6) {
             return 3;
-        } else if (this.count > 8) {
+        } else if (this.count >= 4) {
             return 2;
-        } else if (this.count > 4) {
+        } else if (this.count >= 2) {
             return 1;
         } else {
             return 0;

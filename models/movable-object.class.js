@@ -7,12 +7,15 @@ class MovableObject extends DrawableObject {
     lastHit = 0;
     applyGravityInterval;
     coinStack = 0;
+    bottleStack = 0;
 
     coin_sound = new Audio('../audio/coin.mp3');
+    bottle_sound = new Audio('../audio/bottle.mp3');
 
     constructor(){
         super();
         this.coin_sound.volume = 0.02;
+        this.bottle_sound.volume = 0.1;
     }
 
     applyGravity() {
@@ -51,10 +54,19 @@ class MovableObject extends DrawableObject {
     collect() {
         this.coinStack += 1;
         this.coin_sound.play();
-        if (this.coinStack > 20) {
-            this.coinStack = 20;
+        if (this.coinStack > 10) {
+            this.coinStack = 10;
         }
         console.log('coinStack', this.coinStack);
+    }
+
+    collectBottles() {
+        this.bottleStack += 1;
+        this.bottle_sound.play();
+        if (this.bottleStack > 5) {
+            this.bottleStack = 5;
+        }
+        console.log('bottleStack', this.bottleStack);
     }
 
     isHurt() {

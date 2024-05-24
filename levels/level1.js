@@ -14,6 +14,7 @@ let level1;
             new Bottle(-500),
             new Bottle(-100),
             new Bottle(300),
+            new Bottle(300),
             new Bottle(700),
             new Bottle(1000),
             new Bottle(1400)
