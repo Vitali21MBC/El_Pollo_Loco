@@ -72,9 +72,9 @@ class Character extends MovableObject {
     world;
     offset = {
         top: 120,
-        bottom: 30,
-        left: 40,
-        right: 30
+        bottom: 15,
+        left: 30,
+        right: 40
     }
 
     walking_sound = new Audio('../audio/walking.mp3');

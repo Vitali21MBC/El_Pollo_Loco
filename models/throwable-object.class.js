@@ -25,6 +25,13 @@ class ThrowableObject extends MovableObject {
     throwing_sound = new Audio('../audio/throw.mp3');
     breaking_bottle_sound = new Audio('../audio/breaking_bottle.mp3');
 
+    offset = {
+        top: 10,
+        bottom: 10,
+        left: 0,
+        right: 0
+    }
+
     constructor(x, y) {
         super().loadImage('./img/6_salsa_bottle/salsa_bottle.png');
         this.loadImages(this.IMAGES_BOTTLE);

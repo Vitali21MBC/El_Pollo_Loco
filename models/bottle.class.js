@@ -5,6 +5,13 @@ class Bottle extends MovableObject {
     height = 75;
     randomNumber = 0;
 
+    offset = {
+        top: 10,
+        bottom: 0,
+        left: 25,
+        right: 20
+    }
+
     constructor(x) {
         super();
         this.createRandomNumber();

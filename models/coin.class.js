@@ -5,6 +5,13 @@ class Coin extends MovableObject {
     height = 150;
     sizeChange = true;
 
+    offset = {
+        top: 50,
+        bottom: 50,
+        left: 50,
+        right: 50
+    }
+
     constructor(x) {
         super().loadImage('./img/8_coin/coin_1.png');
         this.x = x + 700 + Math.random() * 700;
