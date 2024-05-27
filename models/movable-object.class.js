@@ -3,7 +3,7 @@ class MovableObject extends DrawableObject {
     otherDirection = false;
     speedY = 0;
     acceleration = 2.5;
-    energy = 100;
+    
     lastHit = 0;
     applyGravityInterval;
     coinStack = 0;
@@ -38,6 +38,13 @@ class MovableObject extends DrawableObject {
     isColliding(mo) {
         return (this.x + this.width) - this.offset.right > (mo.x + mo.offset.left) &&
             (this.y + this.height) - this.offset.bottom > (mo.y + mo.offset.top) &&
+            (this.x + this.offset.left) < (mo.x + mo.width) - mo.offset.right &&
+            (this.y + this.offset.top) < (mo.y + mo.height) - mo.offset.bottom;
+    }
+
+    isJumpingOnEnemy(mo) {
+        return (this.x + this.width) - this.offset.right > (mo.x + mo.offset.left) &&
+            (this.y + this.height + 5) > (mo.y + mo.offset.top) &&
             (this.x + this.offset.left) < (mo.x + mo.width) - mo.offset.right &&
             (this.y + this.offset.top) < (mo.y + mo.height) - mo.offset.bottom;
     }
@@ -89,7 +96,6 @@ class MovableObject extends DrawableObject {
         let animatedIntervall = setInterval(() => {
             let path = images[i];
             this.img = this.imageCache[path];
-            console.log('test', this.img);
             i++;
             if (i == images.length) {
                 clearInterval(animatedIntervall);

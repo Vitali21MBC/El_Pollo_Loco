@@ -49,7 +49,6 @@ class ThrowableObject extends MovableObject {
     }
 
     throw() {
-        console.log('bottleStack', this.bottleStack)
         this.speedY = 30;
         this.throwing_sound.play();
         this.applyGravity();
@@ -59,12 +58,12 @@ class ThrowableObject extends MovableObject {
     }
 
     animate() {
-        let flyBottle = setInterval(() => {
+        let flyingBottle = setInterval(() => {
             if (this.y < 380 && !this.broken) this.playAnimation(this.IMAGES_BOTTLE);
             else if (this.y > 380) {
                 this.y = 380;
                 this.broken = true;
-                clearInterval(flyBottle);
+                clearInterval(flyingBottle);
             }
         }, 75);
     }

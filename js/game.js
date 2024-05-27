@@ -6,7 +6,6 @@ function init() {
     canvas = document.getElementById('canvas');
     world = new World(canvas, keyboard);
 
-    console.log('My Character ist', world.character);
 }
 
 window.addEventListener('keydown', (event) => {
@@ -33,7 +32,6 @@ window.addEventListener('keydown', (event) => {
     if (event.keyCode == 68) {
         keyboard.D = true;
     }
-    console.log(event);
 });
 
 window.addEventListener('keyup', (event) => {
@@ -60,5 +58,4 @@ window.addEventListener('keyup', (event) => {
     if (event.keyCode == 68) {
         keyboard.D = false;
     }
-    console.log(event);
 });

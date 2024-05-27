@@ -1,7 +1,9 @@
 class Chicken extends MovableObject {
+    energy = 5;
     y = 350;
     height = 80;
     width = 60;
+    isChickenDead = false;
 
     offset = {
         top: 0,
@@ -10,6 +12,8 @@ class Chicken extends MovableObject {
         right: 0
     }
 
+    chicken_dead_sound = new Audio('../audio/chicken_dying.mp3');
+
 
     IMAGES_WALKING = [
         './img/3_enemies_chicken/chicken_normal/1_walk/1_w.png',
@@ -17,23 +21,47 @@ class Chicken extends MovableObject {
         './img/3_enemies_chicken/chicken_normal/1_walk/3_w.png'
     ];
 
+    IMAGES_DEAD = [
+        './img/3_enemies_chicken/chicken_normal/2_dead/dead.png',
+    ];
+
+
+
     constructor() {
         super().loadImage('./img/3_enemies_chicken/chicken_normal/1_walk/1_w.png');
         this.loadImages(this.IMAGES_WALKING);
-
-        this.x = 200 + Math.random() * 500;
+        this.loadImages(this.IMAGES_DEAD);
+        this.x = 300 + Math.random() * 2000;
         this.speed = 0.15 + Math.random() * 0.25;
         this.animate();
     }
 
     animate() {
+        // Bewegung und Animation des Huhns, solange es nicht tot ist
         setInterval(() => {
-            this.moveLeft();
+            if (!this.isChickenDead) {
+                this.moveLeft();
+            }
         }, 1000 / 60);
 
-
         setInterval(() => {
-            this.playAnimation(this.IMAGES_WALKING);
+            if (!this.isChickenDead) {
+                this.playAnimation(this.IMAGES_WALKING);
+            } else {
+                this.loadImage(this.IMAGES_DEAD);
+            }
         }, 250);
+
+        // Überprüfen, ob das Huhn verletzt ist
+        setInterval(() => {
+            if (this.isHurt() && !this.isChickenDead) {
+                this.isChickenDead = true;
+                this.chicken_dead_sound.play();
+                this.loadImage(this.IMAGES_DEAD[0]);
+                console.log('Chicken is dead?', this.isChickenDead);
+            }
+        }, 50);
     }
+
+
 }

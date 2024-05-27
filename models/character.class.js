@@ -4,6 +4,7 @@ class Character extends MovableObject {
     width = 150;
     speed = 10;
     sleepTimer = 0;
+    energy = 100;
     
 
     IMAGES_WALKING = [
@@ -111,7 +112,6 @@ class Character extends MovableObject {
                 this.otherDirection = false;
                 this.walking_sound.play();
                 this.sleepTimer = 0;
-                console.log(this.sleepTimer);
             }
 
             if (this.world.keyboard.LEFT && this.x > 0) {
@@ -119,13 +119,11 @@ class Character extends MovableObject {
                 this.otherDirection = true;
                 this.walking_sound.play();
                 this.sleepTimer = 0;
-                console.log(this.sleepTimer);
             }
 
             if (this.world.keyboard.UP && !this.isAboveGround()) {
                 this.jump();
                 this.sleepTimer = 0;
-                console.log(this.sleepTimer);
             }
 
             this.world.camera_x = -this.x + 100;
@@ -143,11 +141,9 @@ class Character extends MovableObject {
                 this.playAnimation(this.IMAGES_SLEEP);
                 this.snoring_sound.play();
                 this.sleepTimer++;
-                console.log('SLEEP', this.sleepTimer);
             } else if (this.sleepTimer < 60 && !(this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && !this.isAboveGround() && !this.isDead() && !this.isHurt()) {
                 this.playAnimation(this.IMAGES_IDLE);
                 this.sleepTimer++;
-                console.log('IDLE', this.sleepTimer);
             }
         }, 200);  // Adjust the interval as needed
 

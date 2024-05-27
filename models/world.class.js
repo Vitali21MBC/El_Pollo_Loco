@@ -1,5 +1,6 @@
 class World {
     character = new Character();
+    chicken = new Chicken();
     level = level1;
     canvas;
     ctx;
@@ -29,29 +30,83 @@ class World {
     run() {
         setInterval(() => {
             this.checkCollisions();
+            this.checkJumpingOnEnemy();
             this.checkCollections();
             this.checkBottleCollections();
             this.checkThrowObjects();
-        }, 200);
+        }, 1);
     }
 
     checkThrowObjects() {
-        console.log(this.character.bottleStack);
-        if (this.keyboard.D && this.character.bottleStack >= 1) {
+        if (this.keyboard.SPACE && this.character.bottleStack >= 1) {
             this.character.bottleStack--;
             this.bottleBar.setPercentage(this.character.bottleStack);
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100)
             this.throwableObject.push(bottle)
+            this.character.sleepTimer = 0;
         }
     }
 
+
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy)) {
+            if (this.character.isColliding(enemy) && !enemy.isDead()) {
                 this.character.hit();
                 this.statusBar.setPercentage(this.character.energy);
             }
+
+            this.throwableObject.forEach((bottle) => {
+                if (bottle.isColliding(enemy) && !enemy.isDead()) {
+                    bottle.broken = true;
+
+                    // Flaschen werden ausgeblendet, sobald ein Gegner getroffen wird
+                    let hitBottle = this.throwableObject.indexOf(bottle);
+                    setTimeout(() => {
+                        this.throwableObject.splice(hitBottle, 1);
+                    }, 500);
+
+                    enemy.hit();
+
+
+                    let hitChicken = this.level.enemies.indexOf(enemy);
+                    setTimeout(() => {
+                        this.level.enemies.splice(hitChicken, 1);
+                        console.log('gelöschtes Huhn', hitChicken);
+                    }, 1500);
+
+                    console.log('Chicken energy:', this.chicken.energy);
+                    // console.log('Chicken hit by Bottle', this.chicken);
+                    this.chicken.isChickenDead = true;
+
+
+                    // Gegner wird ausgeblendet, sobald mit Flasche getroffen
+                    // let hitChicken = this.level.enemies.indexOf(enemy);
+                    // if (this.chicken.isChickenDead == true) {
+                    //     setTimeout(() => {
+                    //         this.level.enemies.splice(hitChicken, 1);
+                    //         console.log('gelöschtes Huhn', hitChicken);
+                    //     }, 500);
+                    // }
+
+                    // console.log('hitChicken?', hitChicken);
+
+                }
+            });
         });
+    }
+
+    checkJumpingOnEnemy() {
+            this.level.enemies.forEach((enemy) => {
+                if (this.character.isJumpingOnEnemy(enemy) && this.character.isAboveGround() && !enemy.isDead()) {
+                    enemy.hit();
+                    let hitChicken = this.level.enemies.indexOf(enemy);
+                    setTimeout(() => {
+                        this.level.enemies.splice(hitChicken, 1);
+                        console.log('gelöschtes Huhn', hitChicken);
+                    }, 450);
+                    this.character.jump();
+                }
+            });
     }
 
     checkCollections() {
