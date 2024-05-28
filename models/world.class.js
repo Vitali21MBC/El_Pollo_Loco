@@ -96,17 +96,17 @@ class World {
     }
 
     checkJumpingOnEnemy() {
-            this.level.enemies.forEach((enemy) => {
-                if (this.character.isJumpingOnEnemy(enemy) && this.character.isAboveGround() && !enemy.isDead()) {
-                    enemy.hit();
-                    let hitChicken = this.level.enemies.indexOf(enemy);
-                    setTimeout(() => {
-                        this.level.enemies.splice(hitChicken, 1);
-                        console.log('gelöschtes Huhn', hitChicken);
-                    }, 450);
-                    this.character.jump();
-                }
-            });
+        this.level.enemies.forEach((enemy) => {
+            if (this.character.isJumpingOnEnemy(enemy) && this.character.isAboveGround() && !enemy.isDead()) {
+                enemy.hit();
+                let hitChicken = this.level.enemies.indexOf(enemy);
+                setTimeout(() => {
+                    this.level.enemies.splice(hitChicken, 1);
+                    console.log('gelöschtes Huhn', hitChicken);
+                }, 450);
+                this.character.jump();
+            }
+        });
     }
 
     checkCollections() {
@@ -136,23 +136,44 @@ class World {
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-        this.ctx.translate(this.camera_x, 0);
-
-        this.addObjectsToMap(this.level.backgroundObjects);
+        // ----------Space for moving obects ---------
+        this.ctx.translate(this.camera_x * 0.1, 0);
+        // this.addObjectsToMap(this.level.backgroundObjects);
+        this.addObjectsToMap(this.level.backgroundObjectsThirdLayer);
         this.addObjectsToMap(this.level.clouds)
+        this.ctx.translate(-this.camera_x * 0.1, 0);
+        // ----------Space for moving obects ---------
+
+        // ----------Space for moving obects ---------
+        this.ctx.translate(this.camera_x * 0.3, 0);
+        // this.addObjectsToMap(this.level.backgroundObjects);
+        this.addObjectsToMap(this.level.backgroundObjectsSecondLayer);
+        this.ctx.translate(-this.camera_x * 0.3, 0);
+        // ----------Space for moving obects ---------
+
+        // ----------Space for moving obects ---------
+        this.ctx.translate(this.camera_x, 0);
+        // this.addObjectsToMap(this.level.backgroundObjects);
+        this.addObjectsToMap(this.level.backgroundObjectsFirstLayer);
         this.ctx.translate(-this.camera_x, 0);
+        // ----------Space for moving obects ---------
+
+
+
+
         // --------- Space for fixed objects ---------
         this.addToMap(this.statusBar);
         this.addToMap(this.coinBar);
         this.addToMap(this.bottleBar);
-        this.ctx.translate(this.camera_x, 0);
         // --------- Space for fixed objects ---------
+
+
+        this.ctx.translate(this.camera_x, 0);
+
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.bottles);
         this.addObjectsToMap(this.level.coins);
-        ;
-
         this.addObjectsToMap(this.throwableObject);
 
         this.ctx.translate(-this.camera_x, 0);

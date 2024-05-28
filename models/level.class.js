@@ -3,15 +3,21 @@ class Level {
     clouds;
     bottles;
     coins;
-    backgroundObjects;
-    level_end_x = 2200;
+    // backgroundObjects;
+    backgroundObjectsThirdLayer;
+    backgroundObjectsSecondLayer;
+    backgroundObjectsFirstLayer;
+    level_end_x = 4300;
 
-    constructor(enemies, bottles, coins, clouds,backgroundObjects) {
+    constructor(enemies, bottles, coins, clouds, backgroundObjectsThirdLayer, backgroundObjectsSecondLayer, backgroundObjectsFirstLayer) {
         this.enemies = enemies;
 
         this.bottles = bottles;
         this.coins = coins;
         this.clouds = clouds;
-        this.backgroundObjects = backgroundObjects;
+        // this.backgroundObjects = backgroundObjects;
+        this.backgroundObjectsThirdLayer = backgroundObjectsThirdLayer;
+        this.backgroundObjectsSecondLayer = backgroundObjectsSecondLayer;
+        this.backgroundObjectsFirstLayer = backgroundObjectsFirstLayer;
     }
 }

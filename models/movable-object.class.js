@@ -3,7 +3,7 @@ class MovableObject extends DrawableObject {
     otherDirection = false;
     speedY = 0;
     acceleration = 2.5;
-    
+
     lastHit = 0;
     applyGravityInterval;
     coinStack = 0;
@@ -12,7 +12,7 @@ class MovableObject extends DrawableObject {
     coin_sound = new Audio('../audio/coin.mp3');
     bottle_sound = new Audio('../audio/bottle.mp3');
 
-    constructor(){
+    constructor() {
         super();
         this.coin_sound.volume = 0.02;
         this.bottle_sound.volume = 0.1;
@@ -31,7 +31,11 @@ class MovableObject extends DrawableObject {
         if (this instanceof ThrowableObject) {
             return true;
         } else {
-            return this.y < 130;
+            if (this.height > 80) {
+                return this.y < 130;
+            } else{
+                return this.y < 350;
+            }
         }
     }
 
@@ -138,4 +142,5 @@ class MovableObject extends DrawableObject {
     moveLeft() {
         this.x -= this.speed;
     }
+
 }
