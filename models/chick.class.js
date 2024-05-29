@@ -1,7 +1,6 @@
 class Chick extends MovableObject {
     energy = 5;
     y = 370;
-    height = 60;
     width = 60;
     isChickenDead = false;
     startingPosition;
@@ -34,6 +33,8 @@ class Chick extends MovableObject {
         this.loadImages(this.IMAGES_DEAD);
         this.x = 300 + Math.random() * 4000;
         this.speed = 0.5 + Math.random() * 0.25;
+        this.height = 60 + Math.random() * 20;
+        this.y = this.y - (this.height - 60);
         this.applyGravity();
         this.animate();
     }

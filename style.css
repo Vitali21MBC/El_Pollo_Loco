@@ -4,16 +4,19 @@
 }
 
 body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
     margin: 0;
     background-image: url('./img/5_background/desert.jpg');
     background-position: center;
     font-family: 'viva', Arial, Helvetica, sans-serif;
+}
 
+.mainContainer {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+    width: 100%;
 }
 
 h1 {

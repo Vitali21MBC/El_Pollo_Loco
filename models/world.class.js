@@ -1,6 +1,7 @@
 class World {
     character = new Character();
     chicken = new Chicken();
+    endboss = new Endboss();
     level = level1;
     canvas;
     ctx;
@@ -10,7 +11,11 @@ class World {
     coinBar = new CoinBar();
     bottleBar = new BottleBar();
     throwableObject = [];
+    previousSpaceState = false;
     theme_sound = new Audio('../audio/theme.mp3');
+    endboss_close_sound = new Audio('../audio/endboss_close.mp3');
+    endboss_battle_sound = new Audio('../audio/endboss_battle.mp3');
+    endbossSoundPlayed = false;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -19,8 +24,11 @@ class World {
         this.draw();
         this.setWorld();
         this.run();
+        this.checkDistanceToEndboss();
         this.theme_sound.play();
         this.theme_sound.volume = 0.002;
+        this.endboss_close_sound.volume = 0.08;
+        this.endboss_battle_sound.volume = 0.02;
     }
 
     setWorld() {
@@ -34,17 +42,20 @@ class World {
             this.checkCollections();
             this.checkBottleCollections();
             this.checkThrowObjects();
-        }, 1);
+
+        }, 50);
     }
 
     checkThrowObjects() {
-        if (this.keyboard.SPACE && this.character.bottleStack >= 1) {
+
+        if (this.keyboard.SPACE && !this.previousSpaceState && this.character.bottleStack >= 1) {
             this.character.bottleStack--;
             this.bottleBar.setPercentage(this.character.bottleStack);
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100)
             this.throwableObject.push(bottle)
             this.character.sleepTimer = 0;
         }
+        this.previousSpaceState = this.keyboard.SPACE;
     }
 
 
@@ -65,30 +76,24 @@ class World {
                         this.throwableObject.splice(hitBottle, 1);
                     }, 500);
 
+                    console.log('Chicken energy:', enemy.energy);
                     enemy.hit();
 
 
+
                     let hitChicken = this.level.enemies.indexOf(enemy);
-                    setTimeout(() => {
-                        this.level.enemies.splice(hitChicken, 1);
-                        console.log('gelöschtes Huhn', hitChicken);
-                    }, 1500);
+                    if (enemy.isChickenDead == true) {
 
-                    console.log('Chicken energy:', this.chicken.energy);
-                    // console.log('Chicken hit by Bottle', this.chicken);
-                    this.chicken.isChickenDead = true;
+                        setTimeout(() => {
+                            this.level.enemies.splice(hitChicken, 1);
 
+                            console.log('gelöschtes Huhn', hitChicken);
 
-                    // Gegner wird ausgeblendet, sobald mit Flasche getroffen
-                    // let hitChicken = this.level.enemies.indexOf(enemy);
-                    // if (this.chicken.isChickenDead == true) {
-                    //     setTimeout(() => {
-                    //         this.level.enemies.splice(hitChicken, 1);
-                    //         console.log('gelöschtes Huhn', hitChicken);
-                    //     }, 500);
-                    // }
+                        }, 1500);
 
-                    // console.log('hitChicken?', hitChicken);
+                    }
+
+                    console.log('Chicken energy:', enemy.energy);
 
                 }
             });
@@ -98,13 +103,19 @@ class World {
     checkJumpingOnEnemy() {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isJumpingOnEnemy(enemy) && this.character.isAboveGround() && !enemy.isDead()) {
+
                 enemy.hit();
+
                 let hitChicken = this.level.enemies.indexOf(enemy);
                 setTimeout(() => {
                     this.level.enemies.splice(hitChicken, 1);
+                    this.endboss.endbossIndex--;
                     console.log('gelöschtes Huhn', hitChicken);
                 }, 450);
+
                 this.character.jump();
+
+
             }
         });
     }
@@ -170,9 +181,10 @@ class World {
 
         this.ctx.translate(this.camera_x, 0);
 
+        this.addObjectsToMap(this.level.bottles);
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.enemies);
-        this.addObjectsToMap(this.level.bottles);
+        
         this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.throwableObject);
 
@@ -185,6 +197,37 @@ class World {
         });
 
     }
+
+    checkDistanceToEndboss() {
+        let test = setInterval(() => {
+          let characterEndbossDistance = this.character.x - this.level.enemies[this.endboss.endbossIndex].x;
+          // console.log('endbossIndex', this.endboss.endbossIndex);
+          // console.log('characterEndbossDistance', characterEndbossDistance);
+      
+          if (characterEndbossDistance > -600) {
+            this.theme_sound.pause();
+      
+            if (!this.endbossSoundPlayed) {
+              this.endboss_close_sound.play();
+              this.endboss_battle_sound.play();
+              this.endbossSoundPlayed = true;
+            }
+          } else {
+            this.endbossSoundPlayed = false;
+          }
+      
+          if (this.level.enemies[this.endboss.endbossIndex].isEndbossDead == true) {
+            this.endboss_battle_sound.pause();
+          }
+      
+        }, 50);
+      }
+
+      playBossBattleSound(){
+        this.endboss_battle_sound.play();
+      }
+
+
 
     addObjectsToMap(objects) {
         objects.forEach(object => {

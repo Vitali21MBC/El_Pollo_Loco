@@ -2,10 +2,10 @@ class Character extends MovableObject {
     y = 130;
     height = 300;
     width = 150;
-    speed = 10;
+    speed = 5;
     sleepTimer = 0;
     energy = 100;
-    
+
 
     IMAGES_WALKING = [
         './img/2_character_pepe/2_walk/W-21.png',
@@ -95,6 +95,7 @@ class Character extends MovableObject {
         this.applyGravity();
         this.animate();
 
+
         this.walking_sound.volume = 0.1;
         this.jumping_sound.volume = 0.2;
         this.hurt_sound.volume = 0.25;
@@ -133,7 +134,7 @@ class Character extends MovableObject {
             if (this.world.keyboard.RIGHT && !this.isAboveGround() && !this.isDead() || this.world.keyboard.LEFT && !this.isAboveGround() && !this.isDead()) {
                 this.playAnimation(this.IMAGES_WALKING);
             }
-        }, 50);
+        }, 120);
 
         // Separate interval for idle animation
         setInterval(() => {
@@ -165,19 +166,13 @@ class Character extends MovableObject {
                 this.y = this.y + (this.speed * 2);
             }
         }, 60);
-
-        // Separate interval for jumping animation
-        setInterval(() => {
-            if (this.isAboveGround() && !this.isDead() && !this.isHurt()) {
-                this.playAnimation(this.IMAGES_JUMPING);
-            }
-        }, 120);
-
-
     }
 
     jump() {
-        this.speedY = 25;
-        this.jumping_sound.play();
+        if (!this.isDead()) {
+            this.speedY = 25;
+            this.jumping_sound.play();
+            this.playAnimationOnce(this.IMAGES_JUMPING, 0, 80);
+        }
     }
 }

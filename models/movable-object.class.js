@@ -5,6 +5,7 @@ class MovableObject extends DrawableObject {
     acceleration = 2.5;
 
     lastHit = 0;
+    hitCooldown = 1000;
     applyGravityInterval;
     coinStack = 0;
     bottleStack = 0;
@@ -33,7 +34,7 @@ class MovableObject extends DrawableObject {
         } else {
             if (this.height > 80) {
                 return this.y < 130;
-            } else{
+            } else {
                 return this.y < 350;
             }
         }
@@ -41,20 +42,24 @@ class MovableObject extends DrawableObject {
 
     isColliding(mo) {
         return (this.x + this.width) - this.offset.right > (mo.x + mo.offset.left) &&
-            (this.y + this.height) - this.offset.bottom > (mo.y + mo.offset.top) &&
+            (this.y + this.height -15) - this.offset.bottom > (mo.y + mo.offset.top) &&
             (this.x + this.offset.left) < (mo.x + mo.width) - mo.offset.right &&
             (this.y + this.offset.top) < (mo.y + mo.height) - mo.offset.bottom;
     }
 
     isJumpingOnEnemy(mo) {
         return (this.x + this.width) - this.offset.right > (mo.x + mo.offset.left) &&
-            (this.y + this.height + 5) > (mo.y + mo.offset.top) &&
+            (this.y + this.height) > (mo.y + mo.offset.top) &&
             (this.x + this.offset.left) < (mo.x + mo.width) - mo.offset.right &&
             (this.y + this.offset.top) < (mo.y + mo.height) - mo.offset.bottom;
     }
 
     hit() {
-        this.energy -= 5;
+        if (this instanceof Endboss) {
+            this.energy -= 1;
+        } else {
+            this.energy -= 5;
+        }
         if (this.energy < 0) {
             this.energy = 0;
         } else {
@@ -105,6 +110,13 @@ class MovableObject extends DrawableObject {
                 clearInterval(animatedIntervall);
             }
         }, time);
+    }
+
+    playAnimationNoLoop(images) {
+        let path = images[frameCounter];
+        this.img = this.imageCache[path];
+        if (frameCounter < images.length - 1) frameCounter++;
+
     }
 
     changeSizeOfObject(maxWidth, speed) {

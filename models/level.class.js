@@ -3,7 +3,6 @@ class Level {
     clouds;
     bottles;
     coins;
-    // backgroundObjects;
     backgroundObjectsThirdLayer;
     backgroundObjectsSecondLayer;
     backgroundObjectsFirstLayer;
@@ -15,7 +14,6 @@ class Level {
         this.bottles = bottles;
         this.coins = coins;
         this.clouds = clouds;
-        // this.backgroundObjects = backgroundObjects;
         this.backgroundObjectsThirdLayer = backgroundObjectsThirdLayer;
         this.backgroundObjectsSecondLayer = backgroundObjectsSecondLayer;
         this.backgroundObjectsFirstLayer = backgroundObjectsFirstLayer;
