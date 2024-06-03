@@ -22,6 +22,8 @@
     <script src="./models/level.class.js"></script>
     <script src="./models/endboss.class.js"></script>
     <script src="./models/throwable-object.class.js"></script>
+    <script src="./models/endScreen.class.js"></script>
+    <script src="./models/progressBar.class.js"></script>
     <script src="./levels/level1.js"></script>
     <script src="./js/game.js"></script>
     <title>El Pollo Loco</title>
@@ -29,18 +31,22 @@
 
 </head>
 
-<body onload="init()">
+<body>
 
-    <!-- 
-    <embed src="./audio/theme.mp3" width="180" height="90" loop="false" autostart="false" hidden="true" /> -->
+    <!-- <audio id="backgroundMusic" src="./audio/theme.mp3" loop="true" preload="auto"></audio>  -->
     <div class="mainContainer">
-
         <h1>El Pollo Loco</h1>
-        <canvas id="canvas" width="720" height="480">
-        </canvas>
-
+        <div class = "gameWindow">
+            <canvas id="canvas" width="720" height="480" class="d-none"></canvas>
+            <div class="startScreen" id="startScreen">
+                <button class="startButton" onclick="initiateGame()">Start Game</button>
+            </div>
+            <button class="restartGame d-none" id="restartGame" onclick="restartGame()">Replay</button>
+            <div id="progressContainer" class="d-none">
+                <div id="progressBar">0%</div>
+            </div>
+        </div>
     </div>
-
 </body>
 
 </html>

@@ -26,12 +26,13 @@ class Chicken extends MovableObject {
 
 
 
-    constructor() {
+    constructor(x) {
         super().loadImage('./img/3_enemies_chicken/chicken_normal/1_walk/1_w.png');
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_DEAD);
         this.chicken_dead_sound.volume = 0.06;
-        this.x = 300 + Math.random() * 4000;
+        // this.x = 300 + Math.random() * 4000;
+        this.x = x;
         this.speed = 0.15 + Math.random() * 0.25;
         this.height = 80 + Math.random() * 20;
         this.y = this.y - (this.height - 80);
@@ -61,7 +62,6 @@ class Chicken extends MovableObject {
                 this.chicken_dead_sound.play();
                 this.loadImage(this.IMAGES_DEAD[0]);
                 console.log('Chicken is dead?', this.isChickenDead);
-                
             }
         }, 50);
     }

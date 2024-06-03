@@ -1,16 +1,16 @@
 let level1;
-// function initLevel() {
+function initLevel() {
 
 
 
 level1 = new Level(
     [
-        new Chicken(),
-        new Chick(),
-        new Chicken(),
-        new Chick(),
-        new Chicken(),
-        new Endboss()
+        new Chicken(500),
+        new Chick(1000),
+        new Chicken(1500),
+        new Chick(2000),
+        new Chicken(2500),
+        new Endboss(4500)
     ],
     [
         new Bottle(-500),
@@ -79,4 +79,4 @@ level1 = new Level(
     ],
 );
 
-// }
+}

@@ -1,7 +1,5 @@
 class ThrowableObject extends MovableObject {
 
-    // bottleIsBroken = false;
-
     IMAGES_BOTTLE = [
         './img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png',
         './img/6_salsa_bottle/bottle_rotation/2_bottle_rotation.png',
@@ -57,15 +55,35 @@ class ThrowableObject extends MovableObject {
         }, 30);
     }
 
+    // animate() {
+    //     let flyingBottle = setInterval(() => {
+    //         if (this.y < 380 && !this.broken) this.playAnimation(this.IMAGES_BOTTLE);
+    //         else if (this.y > 380) {
+    //             this.y = 380;
+    //             this.broken = true;
+    //             clearInterval(flyingBottle);
+    //         }
+    //     }, 75);
+    // }
+
+
+
+
+
     animate() {
+        
         let flyingBottle = setInterval(() => {
             if (this.y < 380 && !this.broken) this.playAnimation(this.IMAGES_BOTTLE);
-            else if (this.y > 380) {
+        }, 75);
+
+        setInterval(() => {
+            if (this.y > 380) {
                 this.y = 380;
                 this.broken = true;
                 clearInterval(flyingBottle);
             }
         }, 75);
+
     }
 
     bottleBroken() {

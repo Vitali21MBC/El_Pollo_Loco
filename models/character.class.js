@@ -111,7 +111,9 @@ class Character extends MovableObject {
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
                 this.moveRight();
                 this.otherDirection = false;
-                this.walking_sound.play();
+                if (!this.isAboveGround()) {
+                    this.walking_sound.play();
+                }
                 this.sleepTimer = 0;
             }
 
@@ -150,7 +152,7 @@ class Character extends MovableObject {
 
         // Separate interval for hurt animation
         setInterval(() => {
-            if (this.isHurt()) {
+            if (this.isHurt() && !this.isDead()) {
                 this.playAnimation(this.IMAGES_HURT);
                 this.chicken_attack_sound.play();
                 this.hurt_sound.play();
@@ -162,10 +164,11 @@ class Character extends MovableObject {
         // Separate interval for dead animation
         setInterval(() => {
             if (this.isDead()) {
+                this.world.gameOver = true;
                 this.playAnimation(this.IMAGES_DEAD);
-                this.y = this.y + (this.speed * 2);
+            
             }
-        }, 60);
+        }, 240);
     }
 
     jump() {

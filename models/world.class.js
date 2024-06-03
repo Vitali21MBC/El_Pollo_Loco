@@ -10,12 +10,23 @@ class World {
     statusBar = new StatusBar();
     coinBar = new CoinBar();
     bottleBar = new BottleBar();
+    progressBar = new ProgressBar('progressContainer', 'progressBar');
     throwableObject = [];
     previousSpaceState = false;
     theme_sound = new Audio('../audio/theme.mp3');
     endboss_close_sound = new Audio('../audio/endboss_close.mp3');
     endboss_battle_sound = new Audio('../audio/endboss_battle.mp3');
+    game_over_sound_sound = new Audio('../audio/game_over_sound.mp3');
+    game_over_voice_sound = new Audio('../audio/game_over_voice.mp3');
     endbossSoundPlayed = false;
+    endScreen = 0;
+    animationRequest;
+    gameOver = false;
+    gameHasEnded;
+    keepRunning;
+    throwDelay = 0;
+    progress = 0;
+
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -25,10 +36,13 @@ class World {
         this.setWorld();
         this.run();
         this.checkDistanceToEndboss();
+        this.updateProgressBar();
         this.theme_sound.play();
         this.theme_sound.volume = 0.002;
         this.endboss_close_sound.volume = 0.08;
         this.endboss_battle_sound.volume = 0.02;
+        this.game_over_sound_sound.volume = 0.4;
+        this.game_over_voice_sound.volume = 0.2;
     }
 
     setWorld() {
@@ -36,27 +50,58 @@ class World {
     }
 
     run() {
-        setInterval(() => {
+        this.keepRunning = setInterval(() => {
             this.checkCollisions();
             this.checkJumpingOnEnemy();
             this.checkCollections();
             this.checkBottleCollections();
+            this.checkIfBottleIsBroken();
             this.checkThrowObjects();
+            this.winning();
+            this.losing();
 
         }, 50);
     }
 
     checkThrowObjects() {
+        // Increment throwDelay regardless of space key state
+        this.throwDelay += 10; // Increment by 10 milliseconds each frame
 
         if (this.keyboard.SPACE && !this.previousSpaceState && this.character.bottleStack >= 1) {
-            this.character.bottleStack--;
-            this.bottleBar.setPercentage(this.character.bottleStack);
-            let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100)
-            this.throwableObject.push(bottle)
-            this.character.sleepTimer = 0;
+            console.log('WERFEN', this.throwDelay);
+
+
+
+            if (this.throwDelay >= 500) { // Check if 1 second has passed
+                this.character.bottleStack--;
+                
+                this.updateProgressBar();
+                this.bottleBar.setPercentage(this.character.bottleStack);
+                let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
+                this.throwableObject.push(bottle);
+                this.character.sleepTimer = 0;
+
+                // Reset throwDelay after a successful throw
+                this.throwDelay = 0;
+                this.progress = 0;
+            }
+        } else {
+            // Clear throw delay when space is released
+            //   this.throwDelay = 0;
         }
         this.previousSpaceState = this.keyboard.SPACE;
     }
+
+    updateProgressBar() {
+        let interval = setInterval(() => {
+            this.progress += 1;
+            this.progressBar.setProgress(this.progress);
+            if (this.progress >= 100) {
+                clearInterval(interval);
+            }
+        }, 1000/42);
+    }
+
 
 
     checkCollisions() {
@@ -71,22 +116,24 @@ class World {
                     bottle.broken = true;
 
                     // Flaschen werden ausgeblendet, sobald ein Gegner getroffen wird
-                    let hitBottle = this.throwableObject.indexOf(bottle);
-                    setTimeout(() => {
-                        this.throwableObject.splice(hitBottle, 1);
-                    }, 500);
+                    // let hitBottle = this.throwableObject.indexOf(bottle);
+                    // setTimeout(() => {
+                    //     this.throwableObject.splice(hitBottle, 1);
+                    // }, 500);
 
-                    console.log('Chicken energy:', enemy.energy);
+                    console.log('Chicken energy before hit:', enemy.energy);
                     enemy.hit();
+                    console.log('Chicken energy after hit:', enemy.energy);
 
 
 
                     let hitChicken = this.level.enemies.indexOf(enemy);
-                    if (enemy.isChickenDead == true) {
+                    console.log('isChickenDead', enemy.isChickenDead)
+                    if (enemy.energy <= 0) {
 
                         setTimeout(() => {
                             this.level.enemies.splice(hitChicken, 1);
-
+                            this.endboss.endbossIndex--;
                             console.log('gelöschtes Huhn', hitChicken);
 
                         }, 1500);
@@ -144,6 +191,27 @@ class World {
         }
     }
 
+    checkIfBottleIsBroken() {
+
+        // console.log(this.throwableObject.lenght);
+
+        this.throwableObject.forEach((bottle) => {
+            if (bottle.broken) {
+                let hitBottle = this.throwableObject.indexOf(bottle);
+                setTimeout(() => {
+                    this.throwableObject.splice(hitBottle, 1);
+                }, 500);
+            }
+
+
+            //         console.log('Flasche ist GEBROCHEN');
+
+
+
+        });
+
+    }
+
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
@@ -176,6 +244,10 @@ class World {
         this.addToMap(this.statusBar);
         this.addToMap(this.coinBar);
         this.addToMap(this.bottleBar);
+
+        if (this.endScreen != 0) {
+            this.addToMap(this.endScreen);
+        }
         // --------- Space for fixed objects ---------
 
 
@@ -184,7 +256,7 @@ class World {
         this.addObjectsToMap(this.level.bottles);
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.enemies);
-        
+
         this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.throwableObject);
 
@@ -192,40 +264,40 @@ class World {
 
 
         let self = this;
-        requestAnimationFrame(function () {
+        this.animationRequest = requestAnimationFrame(function () {
             self.draw();
         });
 
     }
 
-    checkDistanceToEndboss() {
-        let test = setInterval(() => {
-          let characterEndbossDistance = this.character.x - this.level.enemies[this.endboss.endbossIndex].x;
-          // console.log('endbossIndex', this.endboss.endbossIndex);
-          // console.log('characterEndbossDistance', characterEndbossDistance);
-      
-          if (characterEndbossDistance > -600) {
-            this.theme_sound.pause();
-      
-            if (!this.endbossSoundPlayed) {
-              this.endboss_close_sound.play();
-              this.endboss_battle_sound.play();
-              this.endbossSoundPlayed = true;
-            }
-          } else {
-            this.endbossSoundPlayed = false;
-          }
-      
-          if (this.level.enemies[this.endboss.endbossIndex].isEndbossDead == true) {
-            this.endboss_battle_sound.pause();
-          }
-      
-        }, 50);
-      }
 
-      playBossBattleSound(){
-        this.endboss_battle_sound.play();
-      }
+
+    checkDistanceToEndboss() {
+        let checkDistance = setInterval(() => {
+            let characterEndbossDistance = this.character.x - this.level.enemies[this.endboss.endbossIndex].x;
+            // console.log('endbossIndex', this.endboss.endbossIndex);
+            // console.log('characterEndbossDistance', characterEndbossDistance);
+
+            if (characterEndbossDistance > -600) {
+                this.theme_sound.pause();
+
+                if (!this.endbossSoundPlayed) {
+                    this.endboss_close_sound.play();
+                    this.endboss_battle_sound.play();
+                    this.endbossSoundPlayed = true;
+                }
+            } else {
+                this.endbossSoundPlayed = false;
+            }
+
+            if (this.level.enemies[this.endboss.endbossIndex].isEndbossDead == true) {
+                this.endboss_battle_sound.pause();
+                clearInterval(checkDistance);
+            }
+
+        }, 50);
+    }
+
 
 
 
@@ -258,6 +330,34 @@ class World {
     flipImageBack(mo) {
         mo.x = mo.x * -1;
         this.ctx.restore();
+    }
+
+    winning() {
+        if (this.level.enemies[this.endboss.endbossIndex].isEndbossDead == true) {
+            this.endScreen = new EndScreen('./img/9_intro_outro_screens/win/win_2.png');
+            this.gameEnded();
+        }
+    }
+
+    losing() {
+        if (this.gameOver === true) {
+            // if (music) {
+            this.theme_sound.pause();
+            this.game_over_voice_sound.play();
+            this.game_over_sound_sound.play();
+
+            // }
+            this.endScreen = new EndScreen('./img/9_intro_outro_screens/game_over/game over.png')
+            this.gameEnded();
+        }
+    }
+
+    gameEnded() {
+        clearInterval(this.keepRunning);
+        setTimeout(() => {
+            cancelAnimationFrame(this.animationRequest);
+        }, 1200);
+        this.gameHasEnded = true;
     }
 
 

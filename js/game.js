@@ -1,11 +1,45 @@
 let canvas;
 let world;
+let gameEndInterval;
 let keyboard = new Keyboard();
 
-function init() {
-    canvas = document.getElementById('canvas');
-    world = new World(canvas, keyboard);
+// function startMusic(){
+//     var audio = document.getElementById('backgroundMusic');
+//     audio.volume = 0.01; // Lautstärke auf 20% einstellen
+//     audio.play();
+// }
 
+function initiateGame() {
+    canvas = document.getElementById('canvas');
+    canvas.classList.remove('d-none');
+    document.getElementById('startScreen').classList.add('d-none');
+    document.getElementById('progressContainer').classList.remove('d-none');
+    initLevel();
+    world = new World(canvas, keyboard);
+    checkForGameEnd();
+}
+
+function checkForGameEnd() {
+    console.log('GAME ENDED');
+    gameEndInterval = setInterval(() => {
+        if (world.gameHasEnded === true) {
+            document.getElementById('progressContainer').classList.add('d-none');
+            console.log('GAME ENDED');
+            document.getElementById('restartGame').classList.remove('d-none');
+            // clearInterval(world.backgroundSound);
+            // world.background_sound.pause();
+        }
+    }, 1000 / 60);
+}
+
+function restartGame() { 
+    // world = null;
+    // level1 = null;
+    // document.getElementById('restartGame').classList.add('d-none');
+    // canvas.classList.add('d-none');
+    // clearInterval(gameEndInterval);
+    // document.getElementById('startScreen').classList.remove('d-none');
+    window.location.reload();
 }
 
 window.addEventListener('keydown', (event) => {
