@@ -24,6 +24,7 @@
     <script src="./models/throwable-object.class.js"></script>
     <script src="./models/endScreen.class.js"></script>
     <script src="./models/progressBar.class.js"></script>
+    <script src="./models/endboss-life-bar.class.js"></script>
     <script src="./levels/level1.js"></script>
     <script src="./js/game.js"></script>
     <title>El Pollo Loco</title>
@@ -36,8 +37,30 @@
     <!-- <audio id="backgroundMusic" src="./audio/theme.mp3" loop="true" preload="auto"></audio>  -->
     <div class="mainContainer">
         <h1>El Pollo Loco</h1>
-        <div class = "gameWindow">
+        <div class="gameWindow">
             <canvas id="canvas" width="720" height="480" class="d-none"></canvas>
+            <div id="help-bar" class="gameInfo">
+                <h2 class="keyAssignmentTitle">Key Assignment</h2>
+                <div class="keyAssignment">
+                    <div>
+                        <h3>Move Right</h3>
+                        <h2>Right</h2>
+                    </div>
+                    <div>
+                        <h3>Move Left</h3>
+                        <h2>Left</h2>
+                    </div>
+                    <div>
+                        <h3>Jump</h3>
+                        <h2>Up</h2>
+                    </div>
+                    <div>
+                        <h3>Throw Bottle</h3>
+                        <h2>Space</h2>
+                    </div>
+                </div>
+                <p>(Pepe needs a full Stamina Bar to throw a bottle)</p>
+            </div>
             <div class="startScreen" id="startScreen">
                 <button class="startButton" onclick="initiateGame()">Start Game</button>
             </div>
@@ -46,6 +69,13 @@
                 <div id="progressBar">0%</div>
             </div>
         </div>
+        <footer>
+            <a target="_blank" href="https://freesound.org/">Music & Sounds</a>
+            <a onclick="window.open('./privacy-policy.html', '_blank')">Privacy Policy</a>
+            <div>Images from <a target="_blank" href="https://www.cleanpng.com/">CLEANPNG</a> &
+                <a target="_blank" href="https://pixabay.com/de/">Pixabay</a>
+            </div>
+        </footer>
     </div>
 </body>
 

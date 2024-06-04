@@ -10,6 +10,7 @@ class World {
     statusBar = new StatusBar();
     coinBar = new CoinBar();
     bottleBar = new BottleBar();
+    endbossLifeBar = new EndbossLifeBar();
     progressBar = new ProgressBar('progressContainer', 'progressBar');
     throwableObject = [];
     previousSpaceState = false;
@@ -18,6 +19,7 @@ class World {
     endboss_battle_sound = new Audio('../audio/endboss_battle.mp3');
     game_over_sound_sound = new Audio('../audio/game_over_sound.mp3');
     game_over_voice_sound = new Audio('../audio/game_over_voice.mp3');
+    characterEndbossDistance;
     endbossSoundPlayed = false;
     endScreen = 0;
     animationRequest;
@@ -74,7 +76,7 @@ class World {
 
             if (this.throwDelay >= 500) { // Check if 1 second has passed
                 this.character.bottleStack--;
-                
+
                 this.updateProgressBar();
                 this.bottleBar.setPercentage(this.character.bottleStack);
                 let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
@@ -99,7 +101,7 @@ class World {
             if (this.progress >= 100) {
                 clearInterval(interval);
             }
-        }, 1000/42);
+        }, 1000 / 42);
     }
 
 
@@ -123,6 +125,9 @@ class World {
 
                     console.log('Chicken energy before hit:', enemy.energy);
                     enemy.hit();
+                    this.endbossLifeBar.setPercentage(this.level.enemies[this.endboss.endbossIndex].energy);
+                    // this.level.enemies[this.endboss.endbossIndex]
+                    
                     console.log('Chicken energy after hit:', enemy.energy);
 
 
@@ -148,17 +153,25 @@ class World {
     }
 
     checkJumpingOnEnemy() {
+
         this.level.enemies.forEach((enemy) => {
+            let Char = (this.character.y + this.character.height);
+            let Chicken = (enemy.y + enemy.offset.top);
+            console.log('Char ', Char);
+            console.log('Chicken ', Chicken);
             if (this.character.isJumpingOnEnemy(enemy) && this.character.isAboveGround() && !enemy.isDead()) {
 
                 enemy.hit();
+                this.endbossLifeBar.setPercentage(this.level.enemies[this.endboss.endbossIndex].energy);
 
                 let hitChicken = this.level.enemies.indexOf(enemy);
-                setTimeout(() => {
-                    this.level.enemies.splice(hitChicken, 1);
-                    this.endboss.endbossIndex--;
-                    console.log('gelöschtes Huhn', hitChicken);
-                }, 450);
+                if (enemy.energy <= 0) {
+                    setTimeout(() => {
+                        this.level.enemies.splice(hitChicken, 1);
+                        this.endboss.endbossIndex--;
+                        console.log('gelöschtes Huhn', hitChicken);
+                    }, 450);
+                }
 
                 this.character.jump();
 
@@ -244,6 +257,9 @@ class World {
         this.addToMap(this.statusBar);
         this.addToMap(this.coinBar);
         this.addToMap(this.bottleBar);
+         if (this.characterEndbossDistance > -600) {
+            this.addToMap(this.endbossLifeBar);
+         }
 
         if (this.endScreen != 0) {
             this.addToMap(this.endScreen);
@@ -275,6 +291,7 @@ class World {
     checkDistanceToEndboss() {
         let checkDistance = setInterval(() => {
             let characterEndbossDistance = this.character.x - this.level.enemies[this.endboss.endbossIndex].x;
+            this.characterEndbossDistance = characterEndbossDistance;
             // console.log('endbossIndex', this.endboss.endbossIndex);
             // console.log('characterEndbossDistance', characterEndbossDistance);
 

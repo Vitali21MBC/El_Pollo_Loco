@@ -9,7 +9,9 @@ level1 = new Level(
         new Chick(1000),
         new Chicken(1500),
         new Chick(2000),
-        new Chicken(2500),
+        new Chick(2500),
+        new Chicken(3000),
+        new Chicken(3500),
         new Endboss(4500)
     ],
     [
@@ -22,12 +24,16 @@ level1 = new Level(
         new Bottle(1400)
     ],
     [
-        new Coin(-500),
-        new Coin(-100),
-        new Coin(300),
-        new Coin(700),
-        new Coin(1000),
-        new Coin(1400)
+        new Coin(500, 240),
+        new Coin(700,35),
+        new Coin(900, 260),
+        new Coin(1100, 25),
+        new Coin(2020, 30),
+        new Coin(2120, 20),
+        new Coin(2200, 30),
+        new Coin(2600, 180),
+        new Coin(3000, 40),
+        new Coin(3300, 30),
     ],
     [
         new Cloud(-200),

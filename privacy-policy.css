@@ -1,0 +1,29 @@
+@font-face {
+    font-family: 'roboto';
+    src: url('./fonts/roboto/Roboto-Regular.ttf') format('truetype');
+}
+
+body {
+    margin: 0;
+    padding: 28px;
+    min-height: 100vh;
+    font-family: 'roboto', Arial, Helvetica, sans-serif;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 80px;
+}
+
+h2 {
+    color: brown;
+    margin-top: 70px;
+}
+
+.imprint {
+    margin-top: 0px;
+}
+
+a {
+    color: black;
+}

@@ -5,8 +5,10 @@
 
 body {
     margin: 0;
+    min-height: 100vh;
     background-image: url('./img/5_background/desert.jpg');
     background-position: center;
+    background-size: cover;
     font-family: 'viva', Arial, Helvetica, sans-serif;
 }
 
@@ -17,6 +19,7 @@ body {
     flex-direction: column;
     height: 100vh;
     width: 100%;
+
 }
 
 h1 {
@@ -43,6 +46,65 @@ canvas {
     filter: drop-shadow(0px 0px 12px black);
 }
 
+.gameInfo {
+    position: absolute;
+    bottom: -180px;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items: center;
+    background-color: rgba(255, 224, 130, 0.7);
+    border-radius: 12px;
+    border: 6px solid white;
+    filter: drop-shadow(0px 0px 12px black);
+    padding: 0 10px;
+    width: 700px;
+}
+
+.keyAssignment {
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.keyAssignment div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.keyAssignment h2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: brown;
+    filter: drop-shadow(0px 0px 4px white);
+    margin-block-start: 0;
+    margin-block-end: 0;
+}
+
+.keyAssignment h3 {
+    color: rgb(48, 106, 118);;
+    text-shadow: 3px 3px 2px rgb(210, 119, 0);
+}
+
+.gameInfo p {
+    margin-block-start: 0.3em;
+    margin-block-end: 0;
+}
+
+.keyAssignmentTitle {
+    color: brown;
+    font-size: 2rem;
+    filter: drop-shadow(0px 0px 4px white);
+    margin-block-start: 0;
+    margin-block-end: 0;
+}
+
 .startScreen {
     height: 100%;
     width: 100%;
@@ -62,9 +124,12 @@ canvas {
 }
 
 @keyframes pulse {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: scale(1);
     }
+
     50% {
         transform: scale(1.2);
     }
@@ -79,7 +144,7 @@ canvas {
     font-size: 3.5rem;
     color: #fccb2b;
     text-shadow: 3px 3px 2px rgb(210, 119, 0);
-    animation: pulse 2s infinite; 
+    animation: pulse 2s infinite;
 }
 
 .startButton:hover {
@@ -130,6 +195,29 @@ canvas {
     line-height: 20px;
     color: white;
     border-radius: 5px;
+}
+
+footer {
+    display: flex;
+    margin-top: 200px;
+    gap: 2rem;
+    font-size: 18px;
+}
+
+footer a {
+    text-shadow: 0px 0px 6px #fde2aa;
+}
+
+a {
+    color: rgb(48, 106, 118);
+    font-style: italic;
+    text-decoration: underline;
+    font-family: 'viva', Arial, Helvetica, sans-serif;
+
+}
+
+a:hover {
+    cursor: pointer;
 }
 
 /* Smartphones ----------------------*/

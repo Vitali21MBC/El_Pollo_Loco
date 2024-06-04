@@ -59,7 +59,7 @@ class Endboss extends MovableObject {
         this.loadImages(this.IMAGES_DEAD);
         this.x = 4200;
         this.animate();
-        this.endbossIndex = 5;
+        this.endbossIndex = 7;
 
 
         this.endboss_hurt_sound.volume = 0.2;
@@ -92,7 +92,7 @@ class Endboss extends MovableObject {
                 this.endboss_hurt_sound.play();
                 this.playAnimationOnce(this.IMAGES_HURT, 0, 0);
                 console.log('Endboss is dead?', this.isEndbossDead);
-                this.x -= 15;
+                this.x -= 25;
             }
         }, 60);
 
