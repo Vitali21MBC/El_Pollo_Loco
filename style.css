@@ -371,6 +371,10 @@ a:hover {
     .mobileButtonArea {
         display: flex;
     }
+
+    .gameInfo {
+        display: none;
+    }
 }
 
 
@@ -399,8 +403,16 @@ a:hover {
         display: none;
     }
 
-    .startScreen{
-        display:none;
+    .startScreen {
+        display: none;
+    }
+
+    .gameInfo {
+        display: none;
+    }
+
+    .mainContainer {
+        padding-bottom: 0;
     }
 
 }
