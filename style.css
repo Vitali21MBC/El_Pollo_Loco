@@ -347,6 +347,7 @@ a:hover {
     }
 
     .gameContainer {
+        display: flex;
         height: 100vh;
         margin-top: 0;
     }
@@ -414,5 +415,10 @@ a:hover {
     .mainContainer {
         padding-bottom: 0;
     }
+
+    .gameContainer {
+        display: none;
+    }
+
 
 }
