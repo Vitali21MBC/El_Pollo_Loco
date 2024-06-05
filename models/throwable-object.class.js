@@ -48,7 +48,9 @@ class ThrowableObject extends MovableObject {
 
     throw() {
         this.speedY = 30;
-        this.throwing_sound.play();
+        if (audio) {
+            this.throwing_sound.play();
+        }
         this.applyGravity();
         this.throwInterval = setInterval(() => {
             this.x += 10;
@@ -71,7 +73,7 @@ class ThrowableObject extends MovableObject {
 
 
     animate() {
-        
+
         let flyingBottle = setInterval(() => {
             if (this.y < 380 && !this.broken) this.playAnimation(this.IMAGES_BOTTLE);
         }, 75);
@@ -90,7 +92,9 @@ class ThrowableObject extends MovableObject {
         let bottleBreaksInterval = setInterval(() => {
             if (this.broken) {
                 this.playAnimationOnce(this.IMAGES_SPLASH, 0, 60);
-                this.breaking_bottle_sound.play();
+                if (audio) {
+                    this.breaking_bottle_sound.play();
+                }
                 clearInterval(bottleBreaksInterval);
                 clearInterval(this.throwInterval);
                 clearInterval(this.applyGravityInterval);

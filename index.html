@@ -26,7 +26,7 @@
     <script src="./models/progressBar.class.js"></script>
     <script src="./models/endboss-life-bar.class.js"></script>
     <script src="./levels/level1.js"></script>
-    <script src="./js/game.js"></script>
+
     <title>El Pollo Loco</title>
     <link rel="icon" type="image/x-icon" href="./img/10_favIcon/favIcon.png">
 
@@ -36,39 +36,60 @@
 
     <!-- <audio id="backgroundMusic" src="./audio/theme.mp3" loop="true" preload="auto"></audio>  -->
     <div class="mainContainer">
-        <h1>El Pollo Loco</h1>
-        <div class="gameWindow">
-            <canvas id="canvas" width="720" height="480" class="d-none"></canvas>
-            <div id="help-bar" class="gameInfo">
-                <h2 class="keyAssignmentTitle">Key Assignment</h2>
-                <div class="keyAssignment">
-                    <div>
-                        <h3>Move Right</h3>
-                        <h2>Right</h2>
+        <div class="gameContainer">
+            <h1 translate="no">El Pollo Loco</h1>
+            <div id="gameWindow" class="gameWindow">
+                <canvas id="canvas" width="720" height="480" class="d-none"></canvas>
+                <div id="gameInfo" class="gameInfo">
+                    <h2 class="keyAssignmentTitle">Key Assignment</h2>
+                    <div class="keyAssignment">
+                        <div>
+                            <h3>Move Right</h3>
+                            <h2>Right</h2>
+                        </div>
+                        <div>
+                            <h3>Move Left</h3>
+                            <h2>Left</h2>
+                        </div>
+                        <div>
+                            <h3>Jump</h3>
+                            <h2>Up</h2>
+                        </div>
+                        <div>
+                            <h3>Throw Bottle</h3>
+                            <h2>Space</h2>
+                        </div>
                     </div>
-                    <div>
-                        <h3>Move Left</h3>
-                        <h2>Left</h2>
+                    <p>(Pepe needs a full Stamina Bar to throw a bottle)</p>
+                </div>
+                <div class="overlay">
+                    <div class="restartAndMuteMenu">
+                        <img id="restart" src="./img/11_icons/restart.svg" alt="restart" onclick="restartGame()">
+                        <img id="audioButton" src="./img/11_icons/soundOn.svg" alt="audio" onclick="toggleAudio()">
                     </div>
-                    <div>
-                        <h3>Jump</h3>
-                        <h2>Up</h2>
-                    </div>
-                    <div>
-                        <h3>Throw Bottle</h3>
-                        <h2>Space</h2>
+                    <div class="mobileButtonArea">
+                        <div class="move">
+                            <img id="buttonLeft" src="./img/11_icons/arrow.svg" alt="left">
+                            <img id="buttonRight" src="./img/11_icons/arrow.svg" alt="right">
+                        </div>
+                        <div class="move">
+                            <img id="buttonUp" src="./img/11_icons/arrow.svg" alt="jump">
+                            <img id="buttonThrow" src="./img/11_icons/bottleButton.svg" alt="throw">
+                        </div>
                     </div>
                 </div>
-                <p>(Pepe needs a full Stamina Bar to throw a bottle)</p>
-            </div>
-            <div class="startScreen" id="startScreen">
-                <button class="startButton" onclick="initiateGame()">Start Game</button>
-            </div>
-            <button class="restartGame d-none" id="restartGame" onclick="restartGame()">Replay</button>
-            <div id="progressContainer" class="d-none">
-                <div id="progressBar">0%</div>
+                <div class="startScreen" id="startScreen">
+                    <button class="startButton" onclick="initiateGame()">Start Game</button>
+                </div>
+                <button class="restartGame d-none" id="restartGame" onclick="restartGame()">Replay</button>
+                <div id="progressContainer" class="d-none">
+                    <div id="progressBar">0%</div>
+                </div>
             </div>
         </div>
+        <div class="turnScreenInfo">
+            <h2>Please turn your <br> screen horizontally to play <br> "El Pollo Loco".</h2>
+         </div>
         <footer>
             <a target="_blank" href="https://freesound.org/">Music & Sounds</a>
             <a onclick="window.open('./privacy-policy.html', '_blank')">Privacy Policy</a>
@@ -77,6 +98,7 @@
             </div>
         </footer>
     </div>
+    <script src="./js/game.js"></script>
 </body>
 
 </html>

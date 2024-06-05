@@ -112,7 +112,9 @@ class Character extends MovableObject {
                 this.moveRight();
                 this.otherDirection = false;
                 if (!this.isAboveGround()) {
-                    this.walking_sound.play();
+                    if (audio) {
+                        this.walking_sound.play();
+                    }
                 }
                 this.sleepTimer = 0;
             }
@@ -120,7 +122,9 @@ class Character extends MovableObject {
             if (this.world.keyboard.LEFT && this.x > 0) {
                 this.moveLeft();
                 this.otherDirection = true;
-                this.walking_sound.play();
+                if (audio) {
+                    this.walking_sound.play();
+                }
                 this.sleepTimer = 0;
             }
 
@@ -142,7 +146,9 @@ class Character extends MovableObject {
         setInterval(() => {
             if (this.sleepTimer >= 60 && !(this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && !this.isAboveGround() && !this.isDead() && !this.isHurt()) {
                 this.playAnimation(this.IMAGES_SLEEP);
-                this.snoring_sound.play();
+                if (audio) {
+                    this.snoring_sound.play();
+                }
                 this.sleepTimer++;
             } else if (this.sleepTimer < 60 && !(this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && !this.isAboveGround() && !this.isDead() && !this.isHurt()) {
                 this.playAnimation(this.IMAGES_IDLE);
@@ -154,8 +160,10 @@ class Character extends MovableObject {
         setInterval(() => {
             if (this.isHurt() && !this.isDead()) {
                 this.playAnimation(this.IMAGES_HURT);
-                this.chicken_attack_sound.play();
-                this.hurt_sound.play();
+                if (audio) {
+                    this.chicken_attack_sound.play();
+                    this.hurt_sound.play();
+                }
                 this.sleepTimer = 0;
                 console.log(this.sleepTimer);
             }
@@ -166,7 +174,7 @@ class Character extends MovableObject {
             if (this.isDead()) {
                 this.world.gameOver = true;
                 this.playAnimation(this.IMAGES_DEAD);
-            
+
             }
         }, 240);
     }
@@ -174,7 +182,9 @@ class Character extends MovableObject {
     jump() {
         if (!this.isDead()) {
             this.speedY = 25;
-            this.jumping_sound.play();
+            if (audio) {
+                this.jumping_sound.play();
+            }
             this.playAnimationOnce(this.IMAGES_JUMPING, 0, 80);
         }
     }

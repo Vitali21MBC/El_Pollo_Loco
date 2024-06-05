@@ -81,7 +81,7 @@ class Endboss extends MovableObject {
         setInterval(() => {
             if (!this.isEndbossDead) {
                 this.playAnimation(this.IMAGES_WALKING);
-            } 
+            }
         }, 250);
 
 
@@ -89,7 +89,9 @@ class Endboss extends MovableObject {
 
         setInterval(() => {
             if (this.isHurt() && !this.isEndbossDead) {
-                this.endboss_hurt_sound.play();
+                if (audio) {
+                    this.endboss_hurt_sound.play();
+                }
                 this.playAnimationOnce(this.IMAGES_HURT, 0, 0);
                 console.log('Endboss is dead?', this.isEndbossDead);
                 this.x -= 25;
@@ -99,8 +101,10 @@ class Endboss extends MovableObject {
 
         setInterval(() => {
             if (this.isDead() && !this.endbossWinSoundPlayed) {
-                this.endboss_close_sound.pause();
-                this.endboss_win_sound.play();
+                if (audio) {
+                    this.endboss_close_sound.pause();
+                    this.endboss_win_sound.play();
+                }
                 this.isEndbossDead = true;
                 console.log('Endboss is dead dead?', this.isEndbossDead);
                 this.endbossWinSoundPlayed = true; // Set flag after playing

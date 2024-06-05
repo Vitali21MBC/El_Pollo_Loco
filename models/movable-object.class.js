@@ -69,7 +69,9 @@ class MovableObject extends DrawableObject {
 
     collect() {
         this.coinStack += 1;
-        this.coin_sound.play();
+        if (audio) {
+            this.coin_sound.play();
+        }
         if (this.coinStack > 10) {
             this.coinStack = 10;
         }
@@ -78,7 +80,9 @@ class MovableObject extends DrawableObject {
 
     collectBottles() {
         this.bottleStack += 1;
-        this.bottle_sound.play();
+        if (audio) {
+            this.bottle_sound.play();
+        }
         if (this.bottleStack > 5) {
             this.bottleStack = 5;
         }

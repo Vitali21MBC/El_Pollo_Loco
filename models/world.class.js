@@ -39,7 +39,9 @@ class World {
         this.run();
         this.checkDistanceToEndboss();
         this.updateProgressBar();
-        this.theme_sound.play();
+        if (audio) {
+            this.theme_sound.play();
+        }
         this.theme_sound.volume = 0.002;
         this.endboss_close_sound.volume = 0.08;
         this.endboss_battle_sound.volume = 0.02;
@@ -127,7 +129,7 @@ class World {
                     enemy.hit();
                     this.endbossLifeBar.setPercentage(this.level.enemies[this.endboss.endbossIndex].energy);
                     // this.level.enemies[this.endboss.endbossIndex]
-                    
+
                     console.log('Chicken energy after hit:', enemy.energy);
 
 
@@ -155,10 +157,6 @@ class World {
     checkJumpingOnEnemy() {
 
         this.level.enemies.forEach((enemy) => {
-            let Char = (this.character.y + this.character.height);
-            let Chicken = (enemy.y + enemy.offset.top);
-            console.log('Char ', Char);
-            console.log('Chicken ', Chicken);
             if (this.character.isJumpingOnEnemy(enemy) && this.character.isAboveGround() && !enemy.isDead()) {
 
                 enemy.hit();
@@ -257,9 +255,9 @@ class World {
         this.addToMap(this.statusBar);
         this.addToMap(this.coinBar);
         this.addToMap(this.bottleBar);
-         if (this.characterEndbossDistance > -600) {
+        if (this.characterEndbossDistance > -600) {
             this.addToMap(this.endbossLifeBar);
-         }
+        }
 
         if (this.endScreen != 0) {
             this.addToMap(this.endScreen);
@@ -298,9 +296,11 @@ class World {
             if (characterEndbossDistance > -600) {
                 this.theme_sound.pause();
 
-                if (!this.endbossSoundPlayed) {
-                    this.endboss_close_sound.play();
-                    this.endboss_battle_sound.play();
+                if (!this.endbossSoundPlayed && audio) {
+                    if (audio) {
+                        this.endboss_close_sound.play();
+                        this.endboss_battle_sound.play();
+                    }
                     this.endbossSoundPlayed = true;
                 }
             } else {
@@ -358,12 +358,12 @@ class World {
 
     losing() {
         if (this.gameOver === true) {
-            // if (music) {
-            this.theme_sound.pause();
-            this.game_over_voice_sound.play();
-            this.game_over_sound_sound.play();
+            if (audio) {
+                this.theme_sound.pause();
+                this.game_over_voice_sound.play();
+                this.game_over_sound_sound.play();
 
-            // }
+            }
             this.endScreen = new EndScreen('./img/9_intro_outro_screens/game_over/game over.png')
             this.gameEnded();
         }

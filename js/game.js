@@ -2,6 +2,7 @@ let canvas;
 let world;
 let gameEndInterval;
 let keyboard = new Keyboard();
+let audio = true;
 
 // function startMusic(){
 //     var audio = document.getElementById('backgroundMusic');
@@ -17,6 +18,18 @@ function initiateGame() {
     initLevel();
     world = new World(canvas, keyboard);
     checkForGameEnd();
+    checkTouchControll();
+}
+
+function toggleAudio() {
+    const autioButton = document.getElementById('audioButton');
+    if (audio) {
+        autioButton.src = './img/11_icons/soundOff.svg';
+        audio = false;
+    }else {
+        autioButton.src = './img/11_icons/soundOn.svg';
+        audio = true;
+    }
 }
 
 function checkForGameEnd() {
@@ -32,7 +45,7 @@ function checkForGameEnd() {
     }, 1000 / 60);
 }
 
-function restartGame() { 
+function restartGame() {
     // world = null;
     // level1 = null;
     // document.getElementById('restartGame').classList.add('d-none');
@@ -40,6 +53,7 @@ function restartGame() {
     // clearInterval(gameEndInterval);
     // document.getElementById('startScreen').classList.remove('d-none');
     window.location.reload();
+    checkTouchControll();
 }
 
 window.addEventListener('keydown', (event) => {
@@ -93,3 +107,54 @@ window.addEventListener('keyup', (event) => {
         keyboard.D = false;
     }
 });
+
+function checkTouchControll() {
+    checkTouchLeft();
+    checkTouchRight();
+    checkTouchUp();
+    checkTouchSpace();
+}
+
+function checkTouchLeft() {
+    document.getElementById('buttonLeft').addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        keyboard.LEFT = true;
+    });
+    document.getElementById('buttonLeft').addEventListener('touchend', (e) => {
+        e.preventDefault();
+        keyboard.LEFT = false;
+    });
+}
+
+function checkTouchRight() {
+    document.getElementById('buttonRight').addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        keyboard.RIGHT = true;
+    });
+    document.getElementById('buttonRight').addEventListener('touchend', (e) => {
+        e.preventDefault();
+        keyboard.RIGHT = false;
+    });
+}
+
+function checkTouchUp() {
+    document.getElementById('buttonUp').addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        keyboard.UP = true;
+    });
+    document.getElementById('buttonUp').addEventListener('touchend', (e) => {
+        e.preventDefault();
+        keyboard.UP = false;
+    });
+}
+
+function checkTouchSpace() {
+    document.getElementById('buttonThrow').addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        keyboard.SPACE = true;
+    });
+    document.getElementById('buttonThrow').addEventListener('touchend', (e) => {
+        e.preventDefault();
+        keyboard.SPACE = false;
+    });
+}

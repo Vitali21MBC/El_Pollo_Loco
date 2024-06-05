@@ -19,11 +19,19 @@ body {
     flex-direction: column;
     height: 100vh;
     width: 100%;
-
 }
 
-h1 {
-    font-size: 92px;
+.gameContainer {
+    width: 100%;
+    max-width: 740px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+}
+
+.gameContainer h1 {
+    font-size: 88px;
     color: Brown;
     filter: drop-shadow(0px 0px 4px white);
     margin-bottom: 20px;
@@ -52,7 +60,7 @@ canvas {
     height: 150px;
     display: flex;
     flex-direction: column;
-    justify-content:center;
+    justify-content: center;
     align-items: center;
     background-color: rgba(255, 224, 130, 0.7);
     border-radius: 12px;
@@ -88,7 +96,8 @@ canvas {
 }
 
 .keyAssignment h3 {
-    color: rgb(48, 106, 118);;
+    color: rgb(48, 106, 118);
+    ;
     text-shadow: 3px 3px 2px rgb(210, 119, 0);
 }
 
@@ -117,6 +126,75 @@ canvas {
     border: 6px solid white;
     filter: drop-shadow(0px 0px 12px black);
     border-radius: 12px;
+}
+
+.overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+
+}
+
+.restartAndMuteMenu {
+    width: 40px;
+    /* position: absolute; */
+
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    align-items: flex-end;
+    flex-direction: column;
+    z-index: 4;
+    filter: invert(1);
+    padding-right: 16px;
+    padding-top: 10px;
+}
+
+.restartAndMuteMenu img {
+    cursor: pointer;
+    height: 32px;
+}
+
+.mobileButtonArea {
+    width: 100%;
+    display: none;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 5;
+    padding-bottom: 16px;
+
+}
+
+.mobileButtonArea img {
+    height: 32px;
+}
+
+.move {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+.move img {
+    padding: 5px;
+    border: solid 4px white;
+    border-radius: 100%;
+    background-color: #fccb2b;
+    cursor: pointer;
+}
+
+#buttonLeft {
+    rotate: 180deg;
+}
+
+#buttonUp {
+    rotate: -90deg;
 }
 
 .d-none {
@@ -180,7 +258,7 @@ canvas {
     position: absolute;
     background-color: transparent;
     border: none;
-    width: 110px;
+    width: 80px;
     background-color: #f3f3f3;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -220,10 +298,39 @@ a:hover {
     cursor: pointer;
 }
 
+.turnScreenInfo {
+    display: none;
+}
+
 /* Smartphones ----------------------*/
 @media only screen and (max-width: 720px) {
     canvas {
         width: 100%;
+    }
+
+    .gameWindow {
+        width: 100%;
+    }
+
+    .gameInfo {
+        width: 90%;
+    }
+
+    .gameContainer {
+        width: 100%;
+    }
+
+    footer {
+        display: none;
+    }
+
+    .mainContainer {
+        padding-bottom: 12px;
+    }
+
+    .gameContainer h1 {
+        font-size: 80px;
+        padding-top: 2rem;
     }
 }
 
@@ -231,5 +338,69 @@ a:hover {
 @media only screen and (max-height: 480px) {
     canvas {
         height: 100vh;
+        border: none;
+        border-radius: 0;
     }
+
+    .gameWindow {
+        height: 100vh;
+    }
+
+    .gameContainer {
+        height: 100vh;
+        margin-top: 0;
+    }
+
+    .mainContainer {
+        padding: 0;
+    }
+
+    .gameContainer h1 {
+        display: none;
+    }
+
+    .startScreen {
+        border: none;
+        border-radius: 0;
+    }
+
+    .startButton {
+        margin-top: 1rem;
+    }
+
+    .mobileButtonArea {
+        display: flex;
+    }
+}
+
+
+@media (max-width: 600px) {
+    .turnScreenInfo {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: black;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+    }
+
+    .turnScreenInfo h2 {
+        color: white;
+        font-size: 32px;
+    }
+
+    #restart {
+        display: none;
+    }
+
+    #audioButton {
+        display: none;
+    }
+
+    .startScreen{
+        display:none;
+    }
+
 }
