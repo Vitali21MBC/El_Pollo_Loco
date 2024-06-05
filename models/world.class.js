@@ -14,11 +14,11 @@ class World {
     progressBar = new ProgressBar('progressContainer', 'progressBar');
     throwableObject = [];
     previousSpaceState = false;
-    theme_sound = new Audio('../audio/theme.mp3');
-    endboss_close_sound = new Audio('../audio/endboss_close.mp3');
-    endboss_battle_sound = new Audio('../audio/endboss_battle.mp3');
-    game_over_sound_sound = new Audio('../audio/game_over_sound.mp3');
-    game_over_voice_sound = new Audio('../audio/game_over_voice.mp3');
+    theme_sound = new Audio('./audio/theme.mp3');
+    endboss_close_sound = new Audio('./audio/endboss_close.mp3');
+    endboss_battle_sound = new Audio('./audio/endboss_battle.mp3');
+    game_over_sound_sound = new Audio('./audio/game_over_sound.mp3');
+    game_over_voice_sound = new Audio('./audio/game_over_voice.mp3');
     characterEndbossDistance;
     endbossSoundPlayed = false;
     endScreen = 0;

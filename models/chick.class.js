@@ -12,7 +12,7 @@ class Chick extends MovableObject {
         right: 0
     }
 
-    chicken_dead_sound = new Audio('../audio/chick_dying.mp3');
+    chicken_dead_sound = new Audio('./audio/chick_dying.mp3');
 
 
     IMAGES_WALKING = [

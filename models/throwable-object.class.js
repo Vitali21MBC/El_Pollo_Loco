@@ -20,8 +20,8 @@ class ThrowableObject extends MovableObject {
 
     throwInterval;
     broken = false;
-    throwing_sound = new Audio('../audio/throw.mp3');
-    breaking_bottle_sound = new Audio('../audio/breaking_bottle.mp3');
+    throwing_sound = new Audio('./audio/throw.mp3');
+    breaking_bottle_sound = new Audio('./audio/breaking_bottle.mp3');
 
     offset = {
         top: 10,
