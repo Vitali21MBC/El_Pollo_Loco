@@ -1,9 +1,4 @@
 class Coin extends MovableObject {
-    x;
-    y;
-    width = 150;
-    height = 150;
-    sizeChange = true;
 
     offset = {
         top: 50,
@@ -16,9 +11,36 @@ class Coin extends MovableObject {
         super().loadImage('./img/8_coin/coin_1.png');
         this.x = x;
         this.y = y;
-        // this.x = x + 700 + Math.random() * 700;
-        // this.y = 30 + Math.random() * 230;
-        this.changeSizeOfObject(170, 10);
+        this.width = 150;
+        this.height = 150;
+        this.sizeChange = true;
+        this.sizeChangeAnimation(170, 10);
     }
 
+    sizeChangeAnimation(maxWidth, speed) {
+        setInterval(() => {
+            if (this.sizeChange) this.objectGettingSmaller(speed);
+            if (this.width === 130) this.switchSizeChange();
+            if (!this.sizeChange) this.objectGettingLarger(speed);
+            if (this.width === maxWidth) this.sizeChange = true;
+        }, 80);
+    }
+
+    switchSizeChange() {
+        this.sizeChange = false;
+    }
+
+    objectGettingSmaller(speed) {
+        this.width -= speed;
+        this.height -= speed;
+        this.x += speed / 2;
+        this.y += speed / 2;
+    }
+
+    objectGettingLarger(speed) {
+        this.width += speed;
+        this.height += speed;
+        this.x -= speed / 2;
+        this.y -= speed / 2;
+    }
 }

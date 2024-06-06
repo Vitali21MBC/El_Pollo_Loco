@@ -23,18 +23,15 @@
     <script src="./models/endboss.class.js"></script>
     <script src="./models/throwable-object.class.js"></script>
     <script src="./models/endScreen.class.js"></script>
-    <script src="./models/progressBar.class.js"></script>
+    <script src="./models/staminaBar.class.js"></script>
     <script src="./models/endboss-life-bar.class.js"></script>
     <script src="./levels/level1.js"></script>
-
     <title>El Pollo Loco</title>
     <link rel="icon" type="image/x-icon" href="./img/10_favIcon/favIcon.png">
 
 </head>
 
 <body>
-
-    <!-- <audio id="backgroundMusic" src="./audio/theme.mp3" loop="true" preload="auto"></audio>  -->
     <div class="mainContainer">
         <div class="gameContainer">
             <h1 translate="no">El Pollo Loco</h1>
@@ -82,14 +79,14 @@
                     <button class="startButton" onclick="initiateGame()">Start Game</button>
                 </div>
                 <button class="restartGame d-none" id="restartGame" onclick="restartGame()">Replay</button>
-                <div id="progressContainer" class="d-none">
-                    <div id="progressBar">0%</div>
+                <div id="staminaContainer" class="d-none">
+                    <div id="staminaBar">0%</div>
                 </div>
             </div>
         </div>
         <div class="turnScreenInfo">
             <h2>Please turn your <br> screen horizontally to play <br> "El Pollo Loco".</h2>
-         </div>
+        </div>
         <footer>
             <a target="_blank" href="https://freesound.org/">Music & Sounds</a>
             <a onclick="window.open('./privacy-policy.html', '_blank')">Privacy Policy</a>

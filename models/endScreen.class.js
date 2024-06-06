@@ -1,6 +1,6 @@
 class EndScreen extends DrawableObject {
-    x = 0 
-    y = 0 
+    x = 0
+    y = 0
     height = 480;
     width = 720;
 
@@ -10,7 +10,7 @@ class EndScreen extends DrawableObject {
    * 
    @param {string} img - The image path for the end screen.
    */
-   constructor(img) {
-    super().loadImage(img);
-}
+    constructor(img) {
+        super().loadImage(img);
+    }
 }

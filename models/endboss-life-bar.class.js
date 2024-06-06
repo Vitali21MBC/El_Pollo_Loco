@@ -1,5 +1,7 @@
 class EndbossLifeBar extends DrawableObject {
 
+    percentage = 100;
+
     IMAGES = [
         './img/7_statusbars/2_statusbar_endboss/blue/blue0.png',
         './img/7_statusbars/2_statusbar_endboss/blue/blue20.png',
@@ -9,16 +11,18 @@ class EndbossLifeBar extends DrawableObject {
         './img/7_statusbars/2_statusbar_endboss/blue/blue100.png',
     ];
 
-    percentage = 100;
-
     constructor() {
         super();
         this.loadImages(this.IMAGES);
-        this.x = 400;
+        this.initializeProperties();
+        this.setPercentage(100, this.IMAGES);
+    }
+
+    initializeProperties() {
+        this.x = 360;
         this.y = 0;
         this.width = 300;
         this.height = 80;
-        this.setPercentage(100, this.IMAGES);
     }
 
     setPercentage(percentage) {
@@ -42,5 +46,4 @@ class EndbossLifeBar extends DrawableObject {
             return 0;
         }
     }
-
 }

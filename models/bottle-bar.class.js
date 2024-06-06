@@ -1,5 +1,7 @@
 class BottleBar extends DrawableObject {
 
+    count = 0;
+
     IMAGES = [
         './img/7_statusbars/1_statusbar/3_statusbar_bottle/green/0.png',
         './img/7_statusbars/1_statusbar/3_statusbar_bottle/green/20.png',
@@ -8,8 +10,6 @@ class BottleBar extends DrawableObject {
         './img/7_statusbars/1_statusbar/3_statusbar_bottle/green/80.png',
         './img/7_statusbars/1_statusbar/3_statusbar_bottle/green/100.png',
     ];
-
-    count = 0;
 
     constructor() {
         super();
@@ -20,7 +20,6 @@ class BottleBar extends DrawableObject {
         this.height = 55;
         this.setPercentage(0);
     }
-
 
     setPercentage(count) {
         this.count = count;
@@ -43,5 +42,4 @@ class BottleBar extends DrawableObject {
             return 0;
         }
     }
-
 }

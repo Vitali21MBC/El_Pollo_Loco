@@ -4,109 +4,107 @@ let gameEndInterval;
 let keyboard = new Keyboard();
 let audio = true;
 
-// function startMusic(){
-//     var audio = document.getElementById('backgroundMusic');
-//     audio.volume = 0.01; // Lautstärke auf 20% einstellen
-//     audio.play();
-// }
-
 function initiateGame() {
     canvas = document.getElementById('canvas');
-    canvas.classList.remove('d-none');
-    document.getElementById('startScreen').classList.add('d-none');
-    document.getElementById('progressContainer').classList.remove('d-none');
+    showCanvas();
     initLevel();
     world = new World(canvas, keyboard);
     checkForGameEnd();
     checkTouchControll();
 }
 
+function showCanvas() {
+    canvas.classList.remove('d-none');
+    document.getElementById('startScreen').classList.add('d-none');
+    document.getElementById('staminaContainer').classList.remove('d-none');
+}
+
 function toggleAudio() {
-    const autioButton = document.getElementById('audioButton');
-    if (audio) {
-        autioButton.src = './img/11_icons/soundOff.svg';
-        audio = false;
-    }else {
-        autioButton.src = './img/11_icons/soundOn.svg';
-        audio = true;
-    }
+    const audioButton = document.getElementById('audioButton');
+    audio = !audio;
+    audioButton.src = audio ? './img/11_icons/soundOn.svg' : './img/11_icons/soundOff.svg';
 }
 
 function checkForGameEnd() {
-    console.log('GAME ENDED');
     gameEndInterval = setInterval(() => {
-        if (world.gameHasEnded === true) {
-            document.getElementById('progressContainer').classList.add('d-none');
-            console.log('GAME ENDED');
-            document.getElementById('restartGame').classList.remove('d-none');
-            // clearInterval(world.backgroundSound);
-            // world.background_sound.pause();
+        if (world.gameHasEnded) {
+            hideStaminaBar();
+            showRestartButton();
+            clearInterval(gameEndInterval);
         }
     }, 1000 / 60);
 }
 
+function hideStaminaBar() {
+    document.getElementById('staminaContainer').classList.add('d-none');
+}
+
+function showRestartButton() {
+    document.getElementById('restartGame').classList.remove('d-none');
+}
+
 function restartGame() {
-    // world = null;
-    // level1 = null;
-    // document.getElementById('restartGame').classList.add('d-none');
-    // canvas.classList.add('d-none');
-    // clearInterval(gameEndInterval);
-    // document.getElementById('startScreen').classList.remove('d-none');
     window.location.reload();
     checkTouchControll();
 }
 
-window.addEventListener('keydown', (event) => {
-    if (event.keyCode == 39) {
-        keyboard.RIGHT = true;
-    }
+window.addEventListener('keydown', handleKeyDown);
 
-    if (event.keyCode == 37) {
-        keyboard.LEFT = true;
-    }
+function handleKeyDown(event) {
+    setKeyState(event.keyCode, true);
+}
 
-    if (event.keyCode == 38) {
-        keyboard.UP = true;
+function setKeyState(keyCode, isPressed) {
+    switch (keyCode) {
+        case 39:
+            keyboard.RIGHT = isPressed;
+            break;
+        case 37:
+            keyboard.LEFT = isPressed;
+            break;
+        case 38:
+            keyboard.UP = isPressed;
+            break;
+        case 40:
+            keyboard.DOWN = isPressed;
+            break;
+        case 32:
+            keyboard.SPACE = isPressed;
+            break;
+        case 68:
+            keyboard.D = isPressed;
+            break;
     }
+}
 
-    if (event.keyCode == 40) {
-        keyboard.DOWN = true;
-    }
+window.addEventListener('keyup', handleKeyUp);
 
-    if (event.keyCode == 32) {
-        keyboard.SPACE = true;
-    }
+function handleKeyUp(event) {
+    setKeyState(event.keyCode, false);
+}
 
-    if (event.keyCode == 68) {
-        keyboard.D = true;
+function setKeyState(keyCode, isNotPressed) {
+    switch (keyCode) {
+        case 39:
+            keyboard.RIGHT = isNotPressed;
+            break;
+        case 37:
+            keyboard.LEFT = isNotPressed;
+            break;
+        case 38:
+            keyboard.UP = isNotPressed;
+            break;
+        case 40:
+            keyboard.DOWN = isNotPressed;
+            break;
+        case 32:
+            keyboard.SPACE = isNotPressed;
+            break;
+        case 68:
+            keyboard.D = isNotPressed;
+            break;
     }
-});
-
-window.addEventListener('keyup', (event) => {
-    if (event.keyCode == 39) {
-        keyboard.RIGHT = false;
-    }
-
-    if (event.keyCode == 37) {
-        keyboard.LEFT = false;
-    }
-
-    if (event.keyCode == 38) {
-        keyboard.UP = false;
-    }
-
-    if (event.keyCode == 40) {
-        keyboard.DOWN = false;
-    }
-
-    if (event.keyCode == 32) {
-        keyboard.SPACE = false;
-    }
-
-    if (event.keyCode == 68) {
-        keyboard.D = false;
-    }
-});
+}
 
 function checkTouchControll() {
     checkTouchLeft();

@@ -3,13 +3,11 @@ class MovableObject extends DrawableObject {
     otherDirection = false;
     speedY = 0;
     acceleration = 2.5;
-
     lastHit = 0;
     hitCooldown = 1000;
     applyGravityInterval;
     coinStack = 0;
     bottleStack = 0;
-
     coin_sound = new Audio('./audio/coin.mp3');
     bottle_sound = new Audio('./audio/bottle.mp3');
 
@@ -69,24 +67,14 @@ class MovableObject extends DrawableObject {
 
     collect() {
         this.coinStack += 1;
-        if (audio) {
-            this.coin_sound.play();
-        }
-        if (this.coinStack > 10) {
-            this.coinStack = 10;
-        }
-        console.log('coinStack', this.coinStack);
+        if (audio) this.coin_sound.play();
+        if (this.coinStack > 10) this.coinStack = 10;
     }
 
     collectBottles() {
         this.bottleStack += 1;
-        if (audio) {
-            this.bottle_sound.play();
-        }
-        if (this.bottleStack > 5) {
-            this.bottleStack = 5;
-        }
-        console.log('bottleStack', this.bottleStack);
+        if (audio) this.bottle_sound.play();
+        if (this.bottleStack > 5) this.bottleStack = 5;
     }
 
     isHurt() {
@@ -110,45 +98,8 @@ class MovableObject extends DrawableObject {
             let path = images[i];
             this.img = this.imageCache[path];
             i++;
-            if (i == images.length) {
-                clearInterval(animatedIntervall);
-            }
+            if (i == images.length) clearInterval(animatedIntervall);
         }, time);
-    }
-
-    playAnimationNoLoop(images) {
-        let path = images[frameCounter];
-        this.img = this.imageCache[path];
-        if (frameCounter < images.length - 1) frameCounter++;
-
-    }
-
-    changeSizeOfObject(maxWidth, speed) {
-        setInterval(() => {
-            if (this.sizeChange) this.objectGettingSmaller(speed);
-            if (this.width == 130) this.switchSizeChange();
-            if (!this.sizeChange) this.objectGettingLarger(speed);
-            if (this.width == maxWidth) { this.sizeChange = true; }
-        }, 80);
-    }
-
-    switchSizeChange() {
-        this.sizeChange = false;
-
-    }
-
-    objectGettingSmaller(speed) {
-        this.width -= speed;
-        this.height -= speed;
-        this.x += speed / 2;
-        this.y += speed / 2;
-    }
-
-    objectGettingLarger(speed) {
-        this.width += speed;
-        this.height += speed;
-        this.x -= speed / 2;
-        this.y -= speed / 2;
     }
 
     moveRight() {
@@ -158,5 +109,4 @@ class MovableObject extends DrawableObject {
     moveLeft() {
         this.x -= this.speed;
     }
-
 }
