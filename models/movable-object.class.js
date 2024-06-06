@@ -10,8 +10,8 @@ class MovableObject extends DrawableObject {
     coinStack = 0;
     bottleStack = 0;
 
-    coin_sound = new Audio('../audio/coin.mp3');
-    bottle_sound = new Audio('../audio/bottle.mp3');
+    coin_sound = new Audio('./audio/coin.mp3');
+    bottle_sound = new Audio('./audio/bottle.mp3');
 
     constructor() {
         super();
