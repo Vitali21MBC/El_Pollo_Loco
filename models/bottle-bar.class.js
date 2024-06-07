@@ -11,6 +11,9 @@ class BottleBar extends DrawableObject {
         './img/7_statusbars/1_statusbar/3_statusbar_bottle/green/100.png',
     ];
 
+    /**
+    * Creates a new BottleBar instance.
+    */
     constructor() {
         super();
         this.loadImages(this.IMAGES);
@@ -21,12 +24,22 @@ class BottleBar extends DrawableObject {
         this.setPercentage(0);
     }
 
+    /**
+    * Sets the percentage of the bottle bar filled based on the provided count.
+    * 
+    * @param {number} count - The number of bottles remaining (0-5).
+    */
     setPercentage(count) {
         this.count = count;
         let path = this.IMAGES[this.resolveImageIndex()];
         this.img = this.imageCache[path];
     }
 
+    /**
+    * Resolves the index of the image in the IMAGES array based on the count value.
+    * 
+    * @returns {number} - The index of the image to display in the bottle bar.
+    */
     resolveImageIndex() {
         if (this.count == 5) {
             return 5;

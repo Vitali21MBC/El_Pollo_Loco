@@ -11,6 +11,9 @@ class EndbossLifeBar extends DrawableObject {
         './img/7_statusbars/2_statusbar_endboss/blue/blue100.png',
     ];
 
+    /**
+     * This function creates a new EndbossLifeBar instance.
+     */
     constructor() {
         super();
         this.loadImages(this.IMAGES);
@@ -18,6 +21,9 @@ class EndbossLifeBar extends DrawableObject {
         this.setPercentage(100, this.IMAGES);
     }
 
+    /**
+     * This function initializes the properties of the end boss life bar.
+     */
     initializeProperties() {
         this.x = 360;
         this.y = 0;
@@ -25,12 +31,22 @@ class EndbossLifeBar extends DrawableObject {
         this.height = 80;
     }
 
+    /**
+     * This function sets the percentage of the end boss's life bar and updates the displayed image.
+     * 
+     * @param {number} percentage - The percentage of the end boss's health.
+     */
     setPercentage(percentage) {
         this.percentage = percentage;
         let path = this.IMAGES[this.resolveImageIndex()];
         this.img = this.imageCache[path];
     }
 
+    /**
+     * This function resolves the index of the image to be displayed based on the current percentage.
+     * 
+     * @returns {number} The index of the image to be displayed.
+     */
     resolveImageIndex() {
         if (this.percentage > 40) {
             return 5;

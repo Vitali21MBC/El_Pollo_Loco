@@ -11,6 +11,12 @@ class Bottle extends MovableObject {
         right: 20
     };
 
+
+    /**
+    * Creates a new Bottle instance.
+    * 
+    * @param {number} x - The initial x position of the bottle (relative to the enemy throwing it).
+    */
     constructor(x) {
         super();
         this.createRandomNumber();
@@ -22,6 +28,9 @@ class Bottle extends MovableObject {
         }
     }
 
+    /**
+    * Generates a random number between 0 and 700 (inclusive).
+    */
     createRandomNumber() {
         this.randomNumber = Math.random() * 700;
     }

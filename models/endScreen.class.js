@@ -5,11 +5,11 @@ class EndScreen extends DrawableObject {
     width = 720;
 
     /**
-   * Creates a new end screen instance.
-   * - Loads the provided image for the end screen.
-   * 
-   @param {string} img - The image path for the end screen.
-   */
+    * This function creates a new end screen instance.
+    * - Loads the provided image for the end screen.
+    * 
+    * @param {string} img - The image path for the end screen.
+    */
     constructor(img) {
         super().loadImage(img);
     }

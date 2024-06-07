@@ -29,6 +29,11 @@ class World {
     game_over_sound_sound = new Audio('./audio/game_over_sound.mp3');
     game_over_voice_sound = new Audio('./audio/game_over_voice.mp3');
 
+    /**
+     * This function initializes the game world with the canvas and keyboard.
+     * @param {HTMLCanvasElement} canvas - The canvas element.
+     * @param {Keyboard} keyboard - The keyboard input handler.
+     */
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
@@ -41,6 +46,9 @@ class World {
         this.updateStaminaBar();
     }
 
+    /**
+     * This function draws the game world.
+     */
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.backgroundMovingOnThirdLayer();
@@ -53,6 +61,9 @@ class World {
         });
     }
 
+    /**
+     * This function draws moving background objects on the third layer.
+     */
     backgroundMovingOnThirdLayer() {
         this.ctx.translate(this.camera_x * 0.1, 0);
         this.addObjectsToMap(this.level.backgroundObjectsThirdLayer);
@@ -60,12 +71,18 @@ class World {
         this.ctx.translate(-this.camera_x * 0.1, 0);
     }
 
+    /**
+     * This function draws moving background objects on the second layer.
+     */
     backgroundMovingSecondLayer() {
         this.ctx.translate(this.camera_x * 0.3, 0);
         this.addObjectsToMap(this.level.backgroundObjectsSecondLayer);
         this.ctx.translate(-this.camera_x * 0.3, 0);
     }
 
+    /**
+     * This function draws moving objects on the first layer.
+     */
     objectsMovingOnFirstLayer() {
         this.ctx.translate(this.camera_x, 0);
         this.addObjectsToMap(this.level.backgroundObjectsFirstLayer);
@@ -77,6 +94,9 @@ class World {
         this.ctx.translate(-this.camera_x, 0);
     }
 
+    /**
+     * This function draws non-moving objects on the map.
+     */
     nonMovingObjectsOnMap() {
         this.addToMap(this.statusBar);
         this.addToMap(this.coinBar);
@@ -89,12 +109,20 @@ class World {
         }
     }
 
+    /**
+     * This function adds objects to the map.
+     * @param {Array} objects - Array of objects to be added to the map.
+     */
     addObjectsToMap(objects) {
         objects.forEach(object => {
             this.addToMap(object);
         });
     }
 
+    /**
+     * This function adds an object to the map.
+     * @param {DrawableObject} mo - The object to be added to the map.
+     */
     addToMap(mo) {
         if (mo.otherDirection) {
             this.flipImage(mo);
@@ -105,6 +133,10 @@ class World {
         }
     }
 
+    /**
+     * This function flips the image horizontally.
+     * @param {DrawableObject} mo - The object whose image is to be flipped.
+     */
     flipImage(mo) {
         this.ctx.save();
         this.ctx.translate(mo.width, 0);
@@ -112,11 +144,18 @@ class World {
         mo.x = mo.x * -1;
     }
 
+    /**
+     * This function restores the flipped image to its original state.
+     * @param {DrawableObject} mo - The object whose image was flipped.
+     */
     flipImageBack(mo) {
         mo.x = mo.x * -1;
         this.ctx.restore();
     }
 
+    /**
+     * This function sets the volumes of various game sounds.
+     */
     setSoundVolumes() {
         this.theme_sound.volume = 0.002;
         this.endboss_close_sound.volume = 0.08;
@@ -125,16 +164,25 @@ class World {
         this.game_over_voice_sound.volume = 0.2;
     }
 
+    /**
+     * This function plays the game theme music.
+     */
     playGameThemeMusic() {
         if (audio) {
             this.theme_sound.play();
         }
     }
 
+    /**
+     * This function sets the world for the character.
+     */
     setWorld() {
         this.character.world = this;
     }
 
+    /**
+     * This function runs the game loop.
+     */
     run() {
         this.keepRunning = setInterval(() => {
             this.checkCollisions();
@@ -150,6 +198,9 @@ class World {
         }, 50);
     }
 
+    /**
+     * This function checks collisions between characters and enemies, and between flying bottles and enemies.
+     */
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
             this.collisionCharacterWithEnemy(enemy);
@@ -157,6 +208,10 @@ class World {
         });
     }
 
+    /**
+     * This function handles collision between the character and an enemy.
+     * @param {Enemy} enemy - The enemy object.
+     */
     collisionCharacterWithEnemy(enemy) {
         if (this.character.isColliding(enemy) && !enemy.isDead()) {
             this.character.hit();
@@ -164,6 +219,10 @@ class World {
         }
     }
 
+    /**
+     * This function handles collision between a flying bottle and an enemy.
+     * @param {Enemy} enemy - The enemy object.
+     */
     collisionFlyingBottleWithEnemy(enemy) {
         this.throwableObject.forEach((bottle) => {
             if (bottle.isColliding(enemy) && !enemy.isDead()) {
@@ -175,10 +234,17 @@ class World {
         });
     }
 
+    /**
+     * This function updates the end boss life bar.
+     */
     updateEndbossLifeBar() {
         this.endbossLifeBar.setPercentage(this.level.enemies[this.endboss.endbossIndex].energy);
     }
 
+    /**
+     * This function removes an enemy from the map when it is dead.
+     * @param {Enemy} enemy - The enemy object.
+     */
     removeEnemyFromMapWhenDead(enemy) {
         let hitChicken = this.level.enemies.indexOf(enemy);
         if (enemy.energy <= 0) {
@@ -189,6 +255,9 @@ class World {
         }
     }
 
+    /**
+     * This function checks if the character is jumping on an enemy and handles it.
+     */
     checkJumpingOnEnemy() {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isJumpingOnEnemy(enemy) && this.character.isAboveGround() && !enemy.isDead()) {
@@ -200,6 +269,9 @@ class World {
         });
     }
 
+    /**
+     * This function checks if the character collides with coins, collects them, and updates the coin bar.
+     */
     checkCollections() {
         this.level.coins.forEach((coin) => {
             if (this.character.isColliding(coin)) {
@@ -210,15 +282,25 @@ class World {
         });
     }
 
+    /**
+     * This function removes a collected coin from the map.
+     * @param {Coin} coin - The coin object.
+     */
     removeCoinFromMapWhenCollected(coin) {
         let hitCoin = this.level.coins.indexOf(coin);
         this.level.coins.splice(hitCoin, 1);
     }
 
+    /**
+     * This function updates the coin bar to reflect the character's coin stack.
+     */
     updateCoinBar() {
         this.coinBar.setPercentage(this.character.coinStack);
     }
 
+    /**
+     * This function checks if the character collides with bottles, collects them, and updates the bottle bar.
+     */
     checkBottleCollections() {
         if (this.character.bottleStack < 5) {
             this.level.bottles.forEach((bottle) => {
@@ -231,15 +313,25 @@ class World {
         }
     }
 
+    /**
+     * This function removes a collected bottle from the map.
+     * @param {Bottle} bottle - The bottle object.
+     */
     removeBottleFromMapWhenCollected(bottle) {
         let hitBottle = this.level.bottles.indexOf(bottle);
         this.level.bottles.splice(hitBottle, 1);
     }
 
+    /**
+     * This function updates the bottle bar to reflect the character's bottle stack.
+     */
     updateBottleBar() {
         this.bottleBar.setPercentage(this.character.bottleStack);
     }
 
+    /**
+     * This function checks if the character can throw objects, and initiates the throwing process.
+     */
     checkThrowObjects() {
         this.throwDelay += 10;
         if (this.keyboard.SPACE && !this.previousSpaceState && this.character.bottleStack >= 1) {
@@ -248,6 +340,9 @@ class World {
         this.previousSpaceState = this.keyboard.SPACE;
     }
 
+    /**
+     * This function throws a bottle if the delay is sufficient, updating relevant parameters.
+     */
     throwingBottle() {
         if (this.throwDelay >= 500) {
             this.character.bottleStack--;
@@ -259,11 +354,17 @@ class World {
         }
     }
 
+    /**
+     * This function initiates the throwing process by creating a new throwable object and adding it to the map.
+     */
     initiationBottleThrow() {
         let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
         this.throwableObject.push(bottle);
     }
 
+    /**
+     * This function updates the stamina bar at intervals until it reaches full capacity.
+     */
     updateStaminaBar() {
         let interval = setInterval(() => {
             this.stamina += 1;
@@ -274,15 +375,24 @@ class World {
         }, 1000 / 42);
     }
 
+    /**
+     * This function resets the character's sleep timer.
+     */
     resetCharacterSleepTimer() {
         this.character.sleepTimer = 0;
     }
 
+    /**
+     * This function resets the throw delay and stamina.
+     */
     resetThrowDelay() {
         this.throwDelay = 0;
         this.stamina = 0;
     }
 
+    /**
+     * This function checks if a thrown bottle is broken and removes it from the map.
+     */
     checkIfBottleIsBroken() {
         this.throwableObject.forEach((bottle) => {
             if (bottle.broken) {
@@ -291,6 +401,10 @@ class World {
         });
     }
 
+    /**
+     * This function removes a broken bottle from the map after a delay.
+     * @param {ThrowableObject} bottle - The broken bottle object.
+     */
     removeBottleFromMapWhenBroken(bottle) {
         let hitBottle = this.throwableObject.indexOf(bottle);
         setTimeout(() => {
@@ -298,6 +412,9 @@ class World {
         }, 500);
     }
 
+    /**
+     * This function checks and sets the background music and endboss battle music volumes based on the audio setting.
+     */
     checkBackgroundMusicAudioSetting() {
         if (audio) {
             this.theme_sound.volume = 0.002;
@@ -309,6 +426,9 @@ class World {
         }
     }
 
+    /**
+     * This function checks the distance to the endboss and initiates endboss battle music if necessary.
+     */
     checkDistanceToEndboss() {
         let checkDistance = setInterval(() => {
             let characterEndbossDistance = this.character.x - this.level.enemies[this.endboss.endbossIndex].x;
@@ -322,6 +442,9 @@ class World {
         }, 50);
     }
 
+    /**
+     * This function plays the endboss battle music if conditions are met.
+     */
     playEndbossBattleMusic() {
         this.theme_sound.pause();
         if (!this.endbossSoundPlayed && audio && !this.gameHasEnded) {
@@ -333,11 +456,18 @@ class World {
         }
     }
 
+    /**
+     * This function pauses the endboss battle music and clears the interval for checking endboss distance.
+     * @param {number} checkDistance - The interval for checking distance to the endboss.
+     */
     pauseEndbossBattleMusic(checkDistance) {
         this.endboss_battle_sound.pause();
         clearInterval(checkDistance);
     }
 
+    /**
+     * This function checks if the player has won the game.
+     */
     winning() {
         if (this.level.enemies[this.endboss.endbossIndex].isEndbossDead == true) {
             this.endScreen = new EndScreen('./img/9_intro_outro_screens/win/win_2.png');
@@ -345,6 +475,9 @@ class World {
         }
     }
 
+    /**
+     * This function checks if the player has lost the game.
+     */
     losing() {
         if (this.gameOver === true || this.level.enemies[this.endboss.endbossIndex].x <= -300) {
             this.playLosingSounds();
@@ -353,6 +486,9 @@ class World {
         }
     }
 
+    /**
+     * This function plays the losing sounds if the game is over.
+     */
     playLosingSounds() {
         if (audio) {
             this.theme_sound.pause();
@@ -361,6 +497,9 @@ class World {
         }
     }
 
+    /**
+     * This function ends the game by clearing intervals and animations, marking the game as ended.
+     */
     gameEnded() {
         clearInterval(this.keepRunning);
         setTimeout(() => {

@@ -1,4 +1,14 @@
 let level1;
+
+/** 
+ * This function initializes the level data for the game. 
+ *  It creates a new Level object, passing in several arrays containing information about:
+ *  - Enemies: An array of Chicken and Endboss objects representing enemies at specific positions.
+ *  - Projectiles: An array of Bottle objects representing thrown bottles at specific positions.
+ *  - Coins: An array of Coin objects representing collectable coins at specific positions (x, y coordinates).
+ *  - Clouds: An array of Cloud objects representing background clouds at specific positions.
+ *  - Background layers (air, foreground, etc.): An array of BackgroundObject objects representing different layers of the background with image paths and initial x positions.
+ */
 function initLevel() {
 
     level1 = new Level(

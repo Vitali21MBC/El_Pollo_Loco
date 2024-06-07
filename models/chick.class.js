@@ -21,6 +21,11 @@ class Chick extends MovableObject {
         './img/3_enemies_chicken/chicken_small/2_dead/dead.png',
     ];
 
+    /**
+     * This function creates a new Chick instance.
+     * 
+     * @param {number} x - The initial x position of the chick.
+     */
     constructor(x) {
         super().loadImage('./img/3_enemies_chicken/chicken_small/1_walk/1_w.png');
         this.loadImages(this.IMAGES_WALKING);
@@ -30,6 +35,11 @@ class Chick extends MovableObject {
         this.animate();
     }
 
+    /**
+     * This function initializes the properties of the chick.
+     * 
+     * @param {number} x - The initial x position of the chick.
+     */
     initializeProperties(x) {
         this.x = x;
         this.speed = 0.5 + Math.random() * 0.25;
@@ -37,6 +47,9 @@ class Chick extends MovableObject {
         this.y = this.y - (this.height - 60);
     }
 
+    /**
+     * This function handles the main animation loop for the chick, including jumping, walking, and dying.
+     */
     animate() {
         setInterval(() => {
             this.jumping();
@@ -49,22 +62,34 @@ class Chick extends MovableObject {
         }, 50);
     }
 
+    /**
+     * This function handles the jumping behavior of the chick.
+     */
     jumping() {
         if (!this.isChickenDead && !this.isAboveGround()) {
             this.jump();
         }
     }
 
+    /**
+     * This function makes the chick jump.
+     */
     jump() {
         this.speedY = 25;
     }
 
+    /**
+     * This function handles the walking animation of the chick.
+     */
     walkingAnimation() {
         if (!this.isChickenDead) {
             this.playAnimation(this.IMAGES_WALKING);
         }
     }
 
+    /**
+     * This function handles the dying behavior and animation of the chick.
+     */
     handleChickDying() {
         if (this.isHurt() && !this.isChickenDead) {
             this.isChickenDead = true;
@@ -73,10 +98,16 @@ class Chick extends MovableObject {
         }
     }
 
+    /**
+     * This function handles the dead animation of the chick.
+     */
     deadAnimation() {
         this.loadImage(this.IMAGES_DEAD);
     }
 
+    /**
+     * This function plays the sound of the chick dying.
+     */
     playDeadChickSound() {
         if (audio) this.chicken_dead_sound.play();
     }

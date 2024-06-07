@@ -46,6 +46,9 @@ class Endboss extends MovableObject {
         './img/4_enemie_boss_chicken/5_dead/G26.png',
     ];
 
+    /**
+     * This function creates a new Endboss instance.
+     */
     constructor() {
         super().loadImage(this.IMAGES_ANGRY[0]);
         this.loadImages(this.IMAGES_ANGRY);
@@ -57,18 +60,27 @@ class Endboss extends MovableObject {
         this.animate();
     }
 
+    /**
+     * This function initializes the properties of the Endboss.
+     */
     initializeProperties() {
         this.x = 4200;
         this.endbossIndex = 7;
         this.speed = 1;
     }
 
+    /**
+     * This function sets the volume levels for the Endboss's sounds.
+     */
     setSoundVolumes() {
         this.endboss_hurt_sound.volume = 0.2;
         this.endboss_close_sound.volume = 0.2;
         this.endboss_win_sound.volume = 0.15;
     }
 
+    /**
+     * This function animates the Endboss by setting up intervals for different animations.
+     */
     animate() {
         setInterval(() => {
             this.angryAnimation();
@@ -87,22 +99,34 @@ class Endboss extends MovableObject {
         }, 120);
     }
 
+    /**
+     * This function plays the angry animation of the Endboss.
+     */
     angryAnimation() {
         this.playAnimation(this.IMAGES_ANGRY);
     }
 
+    /**
+     * This function moves the Endboss to the left if it is not dead.
+     */
     movingLeft() {
         if (!this.isEndbossDead) {
             this.moveLeft();
         }
     }
 
+    /**
+     * This function plays the walking animation of the Endboss if it is not dead.
+     */
     walkingAnimation() {
         if (!this.isEndbossDead) {
             this.playAnimation(this.IMAGES_WALKING);
         }
     }
 
+    /**
+     * This function plays the hurt animation and sound of the Endboss if it is hurt and not dead.
+     */
     hurtingAnimation() {
         if (this.isHurt() && !this.isEndbossDead) {
             if (audio) {
@@ -113,6 +137,9 @@ class Endboss extends MovableObject {
         }
     }
 
+    /**
+     * This function handles the dead animation and sound of the Endboss.
+     */
     handlingDeadEndboss() {
         if (this.isDead() && !this.endbossWinSoundPlayed) {
             this.playDeadChickenSound();
@@ -123,6 +150,9 @@ class Endboss extends MovableObject {
         }
     }
 
+    /**
+     * This function plays the sound for when the Endboss dies.
+     */
     playDeadChickenSound() {
         if (audio) {
             this.endboss_close_sound.pause();
@@ -130,6 +160,9 @@ class Endboss extends MovableObject {
         }
     }
 
+    /**
+     * This function plays the dead animation of the Endboss.
+     */
     deadAnimation() {
         this.playAnimation(this.IMAGES_DEAD);
         this.y -= 20;

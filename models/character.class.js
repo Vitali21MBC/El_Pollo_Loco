@@ -81,6 +81,9 @@ class Character extends MovableObject {
         './img/2_character_pepe/1_idle/long_idle/I-20.png',
     ]
 
+    /**
+     * Creates a new Character instance.
+     */
     constructor() {
         super().loadImage('./img/2_character_pepe/1_idle/idle/I-1.png');
         this.loadImages(this.IMAGES_WALKING);
@@ -94,6 +97,9 @@ class Character extends MovableObject {
         this.setSoundVolumes();
     }
 
+    /**
+     * Sets the volume levels for all the character sound effects.
+     */
     setSoundVolumes() {
         this.walking_sound.volume = 0.1;
         this.jumping_sound.volume = 0.2;
@@ -102,6 +108,9 @@ class Character extends MovableObject {
         this.snoring_sound.volume = 0.02;
     }
 
+    /**
+     * The main animation loop for the character, handling various animations based on actions and states.
+     */
     animate() {
         setInterval(() => {
             this.handleCharacterMovement();
@@ -119,12 +128,18 @@ class Character extends MovableObject {
         }, 240);
     }
 
+    /**
+     * Handles character movement based on keyboard input (left/right) and jumping.
+     */
     handleCharacterMovement() {
         this.movingRight();
         this.movingLeft();
         this.jumping();
     }
 
+    /**
+     * This function handles the character's movement to the right based on keyboard input.
+     */
     movingRight() {
         this.walking_sound.pause();
         if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
@@ -137,6 +152,9 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * This function handles the character's movement to the left based on keyboard input.
+     */
     movingLeft() {
         if (this.world.keyboard.LEFT && this.x > 0) {
             this.moveLeft();
@@ -148,6 +166,9 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * This function handles the character's jumping based on keyboard input.
+     */
     jumping() {
         if (this.world.keyboard.UP && !this.isAboveGround()) {
             this.jump();
@@ -155,6 +176,9 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * This function makes the character jump and play the jumping sound.
+     */
     jump() {
         if (!this.isDead()) {
             this.speedY = 25;
@@ -163,12 +187,18 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * This function handles the walking animation of the character.
+     */
     walkingAnimation() {
         if ((this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && !this.isAboveGround() && !this.isDead()) {
             this.playAnimation(this.IMAGES_WALKING);
         }
     }
 
+    /**
+     * This function handles the character's idling and sleeping animations based on the sleep timer and other states.
+     */
     handleIdlingAndSleeping() {
         if (this.sleepTimer >= 60 && !(this.world.keyboard.RIGHT || this.world.keyboard.LEFT) && !this.isAboveGround() && !this.isDead() && !this.isHurt()) {
             this.sleepingAnimation();
@@ -177,16 +207,25 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * This function handles the sleeping animation of the character.
+     */
     sleepingAnimation() {
         this.playAnimation(this.IMAGES_SLEEP);
         if (audio) this.snoring_sound.play();
     }
 
+    /**
+     * This function handles the idling animation of the character.
+     */
     idlingAnimation() {
         this.playAnimation(this.IMAGES_IDLE);
         this.sleepTimer++;
     }
 
+    /**
+     * This function handles the hurt animation of the character.
+     */
     hurtAnimation() {
         if (this.isHurt() && !this.isDead()) {
             this.playAnimation(this.IMAGES_HURT);
@@ -198,6 +237,9 @@ class Character extends MovableObject {
         }
     }
 
+    /**
+     * This function handles the dead animation of the character.
+     */
     deadAnimation() {
         if (this.isDead()) {
             this.world.gameOver = true;
